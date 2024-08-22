@@ -6,6 +6,8 @@ export function Landing() {
         <a href="#/recipes">Recipes</a>
         <br />
         <a href="#/lists">Lists</a>
+        <br />
+        <a href="#/menus">Menus</a>
         </>
     )
 }

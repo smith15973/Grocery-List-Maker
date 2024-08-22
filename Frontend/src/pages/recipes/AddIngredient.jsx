@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react"
-import axios from "axios";
-export function AddIngredient() {
-
-    const [ingredients, setIngredients] = useState([]);
-
-    async function loadIngredients() {
-        const response = await axios.get('http://localhost:3000/ingredients');
-        setIngredients(response.data);
-    }
-    useEffect(() => {
-        loadIngredients();
-    }, []);
+export function AddIngredient({ ingredients, recipeIngredients, onIngredientChange, onRemoveIngredient, onAddIngredient }) {
 
     return (
         <>
-            {recipeForm.ingredients.map((ingredient, index) => (
+            {recipeIngredients.map((ingredient, index) => (
                 <div key={index}>
                     <select
                         name="item"
                         value={ingredient.item}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        onChange={(e) => onIngredientChange(index, e)}
                     >
                         <option value="">Select:</option>
                         {ingredients.map((ingredientOption) => (
@@ -33,18 +21,20 @@ export function AddIngredient() {
                         placeholder="Quantity"
                         name="quantity"
                         value={ingredient.quantity}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        onChange={(e) => onIngredientChange(index, e)}
                     />
                     <input
                         type="text"
                         placeholder="Unit"
                         name="unit"
                         value={ingredient.unit}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        onChange={(e) => onIngredientChange(index, e)}
                     />
-                    <button onClick={(e) => handleRemoveIngredient(index)}>Remove</button>
+                    <button onClick={() => onRemoveIngredient(index)}>Remove</button>
                 </div>
             ))}
+            <button type="button" onClick={onAddIngredient}>Add Ingredient</button>
+
         </>
-    )
+    );
 }

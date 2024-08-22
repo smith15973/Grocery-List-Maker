@@ -5,18 +5,23 @@ import { Landing } from './pages/Landing'
 import { NewRecipe } from './pages/recipes/NewRecipe'
 import { Recipe } from './pages/recipes/Recipe'
 import { Lists } from './pages/lists/Lists'
+import { Menu } from './pages/menus/Menu'
+import { Layout } from './components/Layout'
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/:id" element={<Recipe />} />
-        <Route path="/recipes/new" element={<NewRecipe />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/:id" element={<Recipe />} />
+          <Route path="/recipes/new" element={<NewRecipe />} />
 
-        <Route path="/lists" element={<Lists />} />
+          <Route path="/lists" element={<Lists />} />
+          <Route path="/menus" element={<Menu />} />
+        </Route>
       </Routes>
     </Router>
   )

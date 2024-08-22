@@ -4,6 +4,7 @@ const cors = require('cors')
 const Ingredient = require('./models/ingredient')
 const Recipe = require('./models/recipe')
 const List = require('./models/list')
+const Menu = require('./models/menu')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -32,7 +33,6 @@ app.post('/ingredients', async (req, res) => {
 
 app.get('/recipes', async (req, res) => {
     const recipes = await Recipe.find();
-    console.log(recipes)
     return res.json(recipes)
 })
 app.get('/recipes/:id', async (req, res) => {
@@ -55,6 +55,22 @@ app.post('/recipes', async (req, res) => {
 app.get('/lists', async (req, res) => {
     const lists = await List.find();
     return res.json(lists)
+})
+
+app.get('/menus', async (req, res) => {
+    const menus = await Menu.find().populate("meals.main").sort({ date: 1 });
+    return res.json(menus)
+})
+app.post('/menus', async (req, res) => {
+    const { date, main, type, sides } = req.body;
+    let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: { main, type, sides } } }, { new: true });
+    if (!menuDay) {
+        menuDay = new Menu({ date, meals: [{ main, type, sides }] })
+        await menuDay.save()
+    }
+
+    return res.json(menuDay)
+
 })
 
 

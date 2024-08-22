@@ -11,6 +11,14 @@ export function Recipes() {
 
     useEffect(() => { loadRecipes() }, [])
 
+
+    const [menuItem, setMenuItem] = useState({})
+
+    async function addToMenu(e) {
+        const recipeID = e.target.id.split('-')[1];
+        await axios.post('http://localhost:3000/menus', menuItem)
+    }
+
     return (
         <>
             <h3>Recipes</h3>
@@ -18,7 +26,13 @@ export function Recipes() {
             <ul>
                 {recipes.map(recipe => {
                     return (
-                        <li key={recipe._id}><a href={`#/recipes/${recipe._id}`}>{recipe.name}</a></li>
+                        <div key={recipe._id}>
+                            <li><a href={`#/recipes/${recipe._id}`}>{recipe.name}</a></li>
+                            <form>
+                                <input type="date" />
+                                <button type="submit" id={`addToMenuButton-${recipe._id}`} onClick={(e) => { addToMenu(e) }}>Add to Menu</button>
+                            </form>
+                        </div>
                     )
                 })}
             </ul>

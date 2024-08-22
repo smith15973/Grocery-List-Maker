@@ -1,6 +1,6 @@
 export function Ingredient({ ingredient }) {
 
     return (
-        <li>{ingredient.name}</li>
+        <li><b>Name: </b>{ingredient.name}, <b>Group:</b> {ingredient.group}</li>
     )
 }
