@@ -7,7 +7,7 @@ export function Navbar() {
         <div className="navbar">
             {pageData.map(page => {
                 return (
-                    <Link to={page.path} className="navItem">
+                    <Link key={page.name + page.path} to={page.path} className="navItem">
                         <button>
                             {page.name}
                         </button>

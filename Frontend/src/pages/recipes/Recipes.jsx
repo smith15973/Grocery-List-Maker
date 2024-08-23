@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
+import FormDialog from "../../components/FormDialog";
+import { AddToMenuForm } from "./AddToMenuForm";
 export function Recipes() {
 
     const [recipes, setRecipes] = useState([])
@@ -12,30 +14,22 @@ export function Recipes() {
     useEffect(() => { loadRecipes() }, [])
 
 
-    const [menuItem, setMenuItem] = useState({})
-
-    async function addToMenu(e) {
-        const recipeID = e.target.id.split('-')[1];
-        await axios.post('http://localhost:3000/menus', menuItem)
-    }
 
     return (
         <>
+            <FormDialog />
             <h3>Recipes</h3>
             <a href="#/recipes/new">New Recipe</a>
-            <ul>
+            <div>
                 {recipes.map(recipe => {
                     return (
                         <div key={recipe._id}>
-                            <li><a href={`#/recipes/${recipe._id}`}>{recipe.name}</a></li>
-                            <form>
-                                <input type="date" />
-                                <button type="submit" id={`addToMenuButton-${recipe._id}`} onClick={(e) => { addToMenu(e) }}>Add to Menu</button>
-                            </form>
+                            <a href={`#/recipes/${recipe._id}`}>{recipe.name}</a>
+                            <AddToMenuForm recipeID={recipe._id} />
                         </div>
                     )
                 })}
-            </ul>
+            </div>
         </>
     )
 }

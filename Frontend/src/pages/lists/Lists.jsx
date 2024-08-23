@@ -14,7 +14,7 @@ export function Lists() {
     return (
         <>
             <h3>Lists</h3>
-            <a href="#/Lists/new">New List</a>
+            <button>Create New List</button>
             <ul>
                 {lists.map(list => {
                     return (

@@ -53,8 +53,25 @@ app.post('/recipes', async (req, res) => {
 })
 
 app.get('/lists', async (req, res) => {
-    const lists = await List.find();
+    const lists = await List.find().populate('ingredients.item');
     return res.json(lists)
+})
+app.get('/lists/:id', async (req, res) => {
+    const list = await List.findById(req.params.id).populate('ingredients.item');
+    return res.json(list)
+})
+
+app.put('/lists/:id/toggleCheck', async (req, res) => {
+    const { id } = req.params
+    const { ingredientId } = req.body
+    const list = await List.findById(id).populate('ingredients.item')
+    const ingredient = list.ingredients.id(ingredientId)
+    ingredient.complete = !ingredient.complete;
+    await list.save()
+    res.json(list)
+})
+
+app.post('/lists', async (req, res) => {
 })
 
 app.get('/menus', async (req, res) => {
@@ -72,6 +89,29 @@ app.post('/menus', async (req, res) => {
     return res.json(menuDay)
 
 })
+
+app.put('/menus/addToList', async (req, res) => {
+    const { menuDayID, listID } = req.body;
+    let list;
+    if (listID) {
+        list = await List.findById(listID);
+    } else {
+        list = new List({ name: "New List", ingredients: [] });
+    }
+
+    const menuDays = await Menu.find({ _id: menuDayID }).populate("meals.main");
+    menuDays.map(menu => {
+        menu.meals.map(meal => {
+            meal.main.ingredients.map(ingredient => {
+                list.ingredients.push({ item: ingredient.item, quantity: ingredient.quantity, unit: ingredient.unit })
+            })
+        })
+    })
+    await list.save()
+    return res.json(list)
+})
+
+
 
 
 

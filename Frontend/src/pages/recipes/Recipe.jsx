@@ -25,7 +25,7 @@ export function Recipe() {
     return (
         <>
             <a href="#/recipes">Back to Recipes</a>
-            <h3>{recipe.name}</h3>
+            <h3>{recipe.name} - {recipe.type}</h3>
             {recipe.ingredients && recipe.ingredients.length ? (
                 <div>
                     <h4>Ingredients</h4>

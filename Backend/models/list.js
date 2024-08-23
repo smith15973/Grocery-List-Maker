@@ -19,7 +19,11 @@ const List = new Schema({
         },
         unit: {
             type: String,
-        }
+        },
+        complete: {
+            type: Boolean,
+            default: false,
+        },
     }],
 
 })

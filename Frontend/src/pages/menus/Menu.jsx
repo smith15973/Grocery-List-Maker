@@ -16,9 +16,10 @@ export function Menu() {
         loadMenus();
     }, []);
 
-    function addToList(e) {
+    async function addToList(e) {
         const menuID = e.target.id.split('-')[1];
-        const respoonse = axios.put(`http://localhost:3000/lists`, { menuID });
+        const response = await axios.put(`http://localhost:3000/menus/addToList`, { menuDayID: menuID });
+        console.log(response.data)
     }
 
     return (

@@ -12,6 +12,7 @@ export function NewRecipe() {
   const [recipeForm, setRecipeForm] = useState({
     name: '',
     description: '',
+    type: '',
     ingredients: [],
   });
 
@@ -72,6 +73,7 @@ export function NewRecipe() {
           type="text"
           name="name"
           placeholder="Name"
+          value={recipeForm.name}
           required
           onChange={handleChange}
         />
@@ -79,15 +81,27 @@ export function NewRecipe() {
           type="text"
           name="description"
           placeholder="Description"
+          value={recipeForm.description}
           onChange={handleChange}
         />
+        <select
+        onChange={handleChange}
+        value={recipeForm.type}
+        name="type">
+          <option value="">Select...</option>
+          <option value="Main">Main</option>
+          <option value="Side">Side</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Snack">Snack</option>
+          <option value="Drink">Drink</option>
+        </select>
         <br />
         <AddIngredient
-        ingredients={ingredients}
-        recipeIngredients={recipeForm.ingredients}
-        onIngredientChange={handleIngredientChange}
-        onRemoveIngredient={handleRemoveIngredient}
-        onAddIngredient={addIngredient}/>
+          ingredients={ingredients}
+          recipeIngredients={recipeForm.ingredients}
+          onIngredientChange={handleIngredientChange}
+          onRemoveIngredient={handleRemoveIngredient}
+          onAddIngredient={addIngredient} />
         <br />
         <button type="submit">Add Recipe</button>
       </form>

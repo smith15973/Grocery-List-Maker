@@ -44,7 +44,11 @@ const Recipe = new Schema({
             type: String,
             // required: true,
         }
-    }
+    },
+    type: {
+        type: String,
+        enum: ['Main', 'Side', 'Snack', 'Dessert', 'Drink'],
+    },
 
 })
 

@@ -7,6 +7,7 @@ import { Recipe } from './pages/recipes/Recipe'
 import { Lists } from './pages/lists/Lists'
 import { Menu } from './pages/menus/Menu'
 import { Layout } from './components/Layout'
+import { ListMaterial } from './pages/lists/List'
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
           <Route path="/recipes/new" element={<NewRecipe />} />
 
           <Route path="/lists" element={<Lists />} />
+          <Route path="/lists/:id" element={<ListMaterial />} />
+
           <Route path="/menus" element={<Menu />} />
         </Route>
       </Routes>
