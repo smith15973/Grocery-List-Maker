@@ -16,9 +16,11 @@ const List = new Schema({
         },
         quantity: {
             type: Number,
+            default: '',
         },
         unit: {
             type: String,
+            default: '',
         },
         complete: {
             type: Boolean,

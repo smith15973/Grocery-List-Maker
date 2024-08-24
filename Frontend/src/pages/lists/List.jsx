@@ -1,52 +1,3 @@
-// import { useEffect, useState } from 'react'
-// import { useParams } from 'react-router-dom'
-// import axios from 'axios'
-// import { Ingredient } from '../../components/Ingredient'
-
-// export function List() {
-
-//     const routeParams = useParams()
-
-//     const [list, setList] = useState({})
-
-//     useEffect(() => {
-//         loadList()
-//     }, [])
-
-//     async function loadList() {
-//         try {
-//             const response = await axios.get(`http://localhost:3000/lists/${routeParams.id}`)
-//             setList(response.data)
-//         } catch (e) {
-//             console.log(e)
-//         }
-//     }
-
-//     return (
-//         <>
-//             <h3>{list.name}</h3>
-//             {list.ingredients && list.ingredients.length ? (
-//                 <div>
-//                     <h4>Ingredients</h4>
-//                         {list.ingredients.map(ingredient => {
-//                             return (
-//                                 <div key={ingredient._id}>
-//                                     <input type="checkbox" name="complete" id={`${ingredient._id}-complete`} value={ingredient.complete} />
-//                                     <Ingredient  ingredient={ingredient.item} />
-//                                 </div> 
-//                             )
-//                         })}
-//                 </div>
-//             ) : ''}
-//         </>
-//     )
-// }
-
-
-
-// *************************************
-
-import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -54,10 +5,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import TrashIcon from '@mui/icons-material/Delete';
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { AddItemToList } from './AddItemToList';
 
 export function ListMaterial() {
     const routeParams = useParams()
@@ -85,6 +37,13 @@ export function ListMaterial() {
         }
     }
 
+    const handleDelete = async (ingredientId) => {
+        const response = await axios.delete(`http://localhost:3000/lists/${routeParams.id}/${ingredientId}`)
+        setList(response.data)
+    }
+
+
+
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {list.ingredients.sort((a, b) => {
@@ -95,6 +54,11 @@ export function ListMaterial() {
                 return (
                     <ListItem
                         key={ingredient._id}
+                        secondaryAction={
+                            <IconButton edge="end" aria-label="delete" onClick={() => { handleDelete(ingredient._id) }}>
+                                <TrashIcon />
+                            </IconButton>
+                        }
                         disablePadding
                     >
                         <ListItemButton role={undefined} onClick={handleToggle(ingredient._id)} dense>
@@ -112,7 +76,12 @@ export function ListMaterial() {
                     </ListItem>
                 );
             })}
+
+            <AddItemToList onItemAdded={loadList} listId={routeParams.id} />
+
         </List>
+
+
 
     );
 }

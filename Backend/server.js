@@ -60,6 +60,10 @@ app.get('/lists/:id', async (req, res) => {
     const list = await List.findById(req.params.id).populate('ingredients.item');
     return res.json(list)
 })
+app.post('/lists/:id', async (req, res) => {
+    const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
+    return res.json(list)
+})
 
 app.put('/lists/:id/toggleCheck', async (req, res) => {
     const { id } = req.params
@@ -68,6 +72,12 @@ app.put('/lists/:id/toggleCheck', async (req, res) => {
     const ingredient = list.ingredients.id(ingredientId)
     ingredient.complete = !ingredient.complete;
     await list.save()
+    res.json(list)
+})
+app.delete('/lists/:listId/:ingredientId', async (req, res) => {
+    const { listId, ingredientId } = req.params
+    const list = await List.findByIdAndUpdate(listId, { $pull: { ingredients: { _id: ingredientId } } }, { new: true }).populate('ingredients.item')
+
     res.json(list)
 })
 
