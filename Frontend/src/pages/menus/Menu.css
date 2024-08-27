@@ -29,3 +29,49 @@
     font-size: 1em;
     font-weight: normal;
 }
+
+.menu {
+    margin-top: 20px;
+}
+
+.menu-day-row {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.menu-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0
+}
+
+.menu-meal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.breakfast {
+    background-color: #f77d7d;
+}
+.lunch {
+    background-color: #6cc256;
+}
+.dinner {
+    background-color: #417fdd;
+}
+.snack {
+    background-color: #eb79e6;
+}
+.dessert {
+    background-color: #bace4b;
+}

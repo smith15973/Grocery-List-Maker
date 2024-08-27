@@ -49,6 +49,7 @@ export function AddToMenu({onMenuUpdated}) {
                     value={addToMenuForm.date}
                     required
                 />
+                <br />
                 <select
                     onChange={(e) => { handleChange(e) }}
                     name="main"
@@ -67,6 +68,7 @@ export function AddToMenu({onMenuUpdated}) {
                         )
                     })}
                 </select>
+                <br />
                 <select
                     name="type"
                     onChange={(e) => { handleChange(e) }}
@@ -80,6 +82,7 @@ export function AddToMenu({onMenuUpdated}) {
                     <option value="Snack">Snack</option>
                     <option value="Dessert">Dessert</option>
                 </select>
+                <br />
                 <button type="submit">Add to Menu</button>
             </form>
 
