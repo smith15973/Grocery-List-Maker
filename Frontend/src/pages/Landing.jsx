@@ -1,3 +1,5 @@
+import NavDrawer from "../components/NavDrawer";
+
 export function Landing() {
 
     return (
@@ -8,6 +10,7 @@ export function Landing() {
         <a href="#/lists">Lists</a>
         <br />
         <a href="#/menus">Menus</a>
+        <br />
         </>
     )
 }
