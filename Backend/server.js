@@ -51,6 +51,16 @@ app.post('/recipes', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while saving the ingredient.' });  // Send an error message to the client
     }
 })
+app.post('/recipes/:id', async (req, res) => {
+    const recipe = await Recipe.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
+    return res.json(recipe)
+})
+app.delete('/recipes/:recipeId/:ingredientId', async (req, res) => {
+    const { recipeId, ingredientId } = req.params
+    const recipe = await Recipe.findByIdAndUpdate(recipeId, { $pull: { ingredients: { _id: ingredientId } } }, { new: true }).populate('ingredients.item')
+
+    res.json(recipe)
+})
 
 app.get('/lists', async (req, res) => {
     const lists = await List.find().populate('ingredients.item');

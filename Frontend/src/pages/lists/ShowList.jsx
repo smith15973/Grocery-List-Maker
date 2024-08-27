@@ -29,7 +29,7 @@ export function ShowList() {
     return (
         <div>
             <h1>{list.name}</h1>
-            <ListOfItems list={ingredientList} listId={list._id} loadList={loadList} />
+            <ListOfItems list={ingredientList} listId={list._id} loadList={loadList} baseURL="http://localhost:3000/lists" />
         </div>
 
 

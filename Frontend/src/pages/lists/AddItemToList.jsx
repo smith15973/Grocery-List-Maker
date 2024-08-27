@@ -2,18 +2,18 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import PlusIcon from '@mui/icons-material/Add';
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import IngredientSelect from '../../components/IngredientSelect';
 import IngredientQuantityInput from '../../components/IngredientQuantityInput';
 import IngredientUnitSelect from '../../components/IngredientUnitSelect';
 
-export function AddItemToList({ onItemAdded, listId }) {
+export function AddItemToList({ onItemAdded, listId, baseURL }) {
 
 
     const [addIngredientForm, setAddIngredientForm] = useState({ item: '', quantity: '', unit: '' })
 
     async function handleAddIngredient() {
-        const response = await axios.post(`http://localhost:3000/lists/${listId}`, {...addIngredientForm, item: addIngredientForm.item.ingredientId})
+        const response = await axios.post(`${baseURL}/${listId}`, {...addIngredientForm, item: addIngredientForm.item.ingredientId})
         onItemAdded()
         setAddIngredientForm({ item: '', quantity: '', unit: '' })
     }

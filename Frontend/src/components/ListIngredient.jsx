@@ -8,15 +8,17 @@ import IconButton from '@mui/material/IconButton';
 import TrashIcon from '@mui/icons-material/Delete';
 import axios from 'axios'
 
-export function ListIngredient({ ingredient, listId, onListUpdated }) {
+export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
     const labelId = `checkbox-list-label-${ingredient._id}`;
+
     const handleToggle = (ingredientId) => async () => {
-        const response = await axios.put(`http://localhost:3000/lists/${listId}/toggleCheck`, { ingredientId })
+        const response = await axios.put(`${baseURL}/${listId}/toggleCheck`, { ingredientId })
         onListUpdated()
     };
 
+
     const handleDelete = async (ingredientId) => {
-        const response = await axios.delete(`http://localhost:3000/lists/${listId}/${ingredientId}`)
+        const response = await axios.delete(`${baseURL}/${listId}/${ingredientId}`)
         onListUpdated()
     }
 
@@ -34,7 +36,7 @@ export function ListIngredient({ ingredient, listId, onListUpdated }) {
             disablePadding
         >
             <ListItemButton role={undefined} onClick={handleToggle(ingredient._id)} dense>
-                <ListItemIcon>
+                {ingredient.complete !== undefined ? <ListItemIcon>
                     <Checkbox
                         edge="start"
                         checked={ingredient.complete}
@@ -42,7 +44,7 @@ export function ListIngredient({ ingredient, listId, onListUpdated }) {
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}
                     />
-                </ListItemIcon>
+                </ListItemIcon> : ''}
                 <ListItemText id={labelId} primary={`${ingredient.item.name} ${ingredient.quantity ? `--- ${ingredient.quantity} ${ingredient.unit}` : ''}`} />
             </ListItemButton>
         </ListItem>

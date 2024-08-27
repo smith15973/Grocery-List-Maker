@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Ingredient } from '../../components/Ingredient'
+import { ListOfItems } from '../lists/ListOfItems'
+
 
 export function Recipe() {
 
     const routeParams = useParams()
 
-    const [recipe, setRecipe] = useState({})
+    const [recipe, setRecipe] = useState({ ingredients: [] })
 
     useEffect(() => {
         loadRecipe()
-    }, [])
+    }, [routeParams.id])
 
     async function loadRecipe() {
         try {
@@ -21,23 +22,14 @@ export function Recipe() {
             console.log(e)
         }
     }
-
+    const ingredientsList = recipe.ingredients.map(ingredient => ingredient)
     return (
         <>
             <a href="#/recipes">Back to Recipes</a>
             <h3>{recipe.name} - {recipe.type}</h3>
-            {recipe.ingredients && recipe.ingredients.length ? (
-                <div>
-                    <h4>Ingredients</h4>
-                    <ul>
-                        {recipe.ingredients.map(ingredient => {
-                            return (
-                                <Ingredient key={ingredient.item._id} ingredient={ingredient.item} />
-                            )
-                        })}
-                    </ul>
-                </div>
-            ) : ''}
+            
+            <ListOfItems list={ingredientsList} listId={recipe._id} loadList={loadRecipe} baseURL="http://localhost:3000/recipes" />
+            
         </>
     )
 }
