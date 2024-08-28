@@ -1,17 +1,23 @@
-import { useNavigate } from "react-router-dom"
+import { MenuMeal } from "./MenuMeal";
 
-export function MenuDay({ date, meals }) {
+export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
-    const navigate = useNavigate();
+    const mealids = menuDay.meals.map(meal => meal._id);
+
+
+    const { date, meals } = menuDay;
+    const formattedDate = (new Date(date)).toISOString().split('T')[0];
+
+    let daySelected = mealids.every(id => mealsSelected.includes(id));
+
+
 
     return (
 
         <div className="menu-day-row">
-            <h2 className="menu-date-box">{date}</h2>
+            <h2 onClick={() => onSelectDay(mealids)} className={`menu-date-box ${daySelected ? 'selected' : ''}`}>{formattedDate}</h2>
             {meals.map(meal => (
-                <div key={meal._id} className={`menu-meal-box ${meal.type.toLowerCase()}`} onClick={() => { navigate(`/recipes/${meal.main._id}`) }}>
-                    <h3>{meal.main.name} {meal.type}</h3>
-                </div>
+                <MenuMeal key={meal._id} meal={meal} onSelect={onMealSelect} mealsSelected={mealsSelected} />
             ))}
         </div>
 

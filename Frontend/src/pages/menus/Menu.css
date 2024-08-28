@@ -75,3 +75,7 @@
 .dessert {
     background-color: #bace4b;
 }
+
+.selected {
+    border: 3px solid dodgerblue;
+}

@@ -7,25 +7,8 @@ const Menu = new Schema({
         required: true,
     },
     meals: [{
-        main: {
-            type: Schema.Types.ObjectId,
-            ref: 'Recipe'
-        },
-        sides: [{
-            recipe: {
-                type: Schema.Types.ObjectId,
-                ref: 'Recipe'
-            },
-            ingredient: {
-                type: Schema.Types.ObjectId,
-                ref: 'Ingredient'
-            }
-        }],
-        type: {
-            type: String,
-            enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert']
-        }
-
+        type: Schema.Types.ObjectId,
+        ref: 'Meal'
     }]
 
 

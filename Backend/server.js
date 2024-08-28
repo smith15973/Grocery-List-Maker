@@ -5,6 +5,7 @@ const Ingredient = require('./models/ingredient')
 const Recipe = require('./models/recipe')
 const List = require('./models/list')
 const Menu = require('./models/menu')
+const Meal = require('./models/meal')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -95,14 +96,31 @@ app.post('/lists', async (req, res) => {
 })
 
 app.get('/menus', async (req, res) => {
-    const menus = await Menu.find().populate("meals.main").sort({ date: 1 });
+    const menus = await Menu.find()
+        .populate({
+            path: 'meals',
+            populate: {
+                path: 'main sides',
+            },
+        })
+        .sort({ date: 1 });
+
+    console.log(menus);
+    menus.map(menu => {
+        menu.meals.map(meal => {
+            console.log(meal)
+        })
+    })
     return res.json(menus)
 })
 app.post('/menus', async (req, res) => {
     const { date, main, type, sides } = req.body;
-    let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: { main, type, sides } } }, { new: true });
+    const meal = new Meal({ main, type, sides });
+    meal.save();
+
+    let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: meal._id } }, { new: true }).populate("meals.main");
     if (!menuDay) {
-        menuDay = new Menu({ date, meals: [{ main, type, sides }] })
+        menuDay = new Menu({ date, meals: [meal._id] })
         await menuDay.save()
     }
 
@@ -111,7 +129,7 @@ app.post('/menus', async (req, res) => {
 })
 
 app.put('/menus/addToList', async (req, res) => {
-    const { menuDayID, listID } = req.body;
+    const { mealids, listID } = req.body;
     let list;
     if (listID) {
         list = await List.findById(listID);
@@ -119,14 +137,23 @@ app.put('/menus/addToList', async (req, res) => {
         list = new List({ name: "New List", ingredients: [] });
     }
 
-    const menuDays = await Menu.find({ _id: menuDayID }).populate("meals.main");
-    menuDays.map(menu => {
-        menu.meals.map(meal => {
-            meal.main.ingredients.map(ingredient => {
-                list.ingredients.push({ item: ingredient.item, quantity: ingredient.quantity, unit: ingredient.unit })
+    const meals = await Meal.find({ _id: { $in: mealids } }).populate('main sides');
+    console.log(meals)
+    meals.map(meal => {
+        meal.main.ingredients.map(ingredient => {
+            const { item, quantity, unit } = ingredient;
+            const listIngredient = { item, quantity, unit, complete: false };
+            list.ingredients.push(listIngredient);
+        })
+        meal.sides.map(side => {
+            side.ingredients.map(ingredient => {
+                const { item, quantity, unit } = ingredient;
+                const listIngredient = { item, quantity, unit, complete: false };
+                list.ingredients.push(listIngredient);
             })
         })
     })
+
     await list.save()
     return res.json(list)
 })
