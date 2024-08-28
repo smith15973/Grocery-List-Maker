@@ -1,0 +1,29 @@
+/* Container for the grid of squares */
+.landing-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust minmax to fit your design */
+    gap: 10px; /* Minimal gap between the squares */
+    width: 100%;
+    padding: 10px; /* Optional: Padding around the container */
+    box-sizing: border-box;
+}
+
+/* Each square item */
+.landing-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1; /* Ensures the div stays square */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+    text-align: center;
+    padding: 10px;
+}
+
+.landing-item h3 {
+    margin-top: 10px;
+    font-size: 1em;
+}
