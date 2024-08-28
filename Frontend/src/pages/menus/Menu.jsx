@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AddToMenu } from "./AddToMenu";
 import './Menu.css';
 import { MenuDay } from "./MenuDay";
+import AddMealsToList from "./AddMealsToList";
 
 export function Menu() {
     const [menus, setMenus] = useState([]);
@@ -51,15 +52,16 @@ export function Menu() {
         }
     }
 
-    async function handleAddToList() {
-        const response = await axios.put(`http://localhost:3000/menus/addToList`, { mealids: mealsSelected });
-        console.log(response.data)
+    function clearSelected() {
+        setSelectMode(false);
+        setMealsSelected([]);
     }
 
     return (
         <>
             <h3 onClick={handleSelectClick}>{selectMode ? 'Cancel' : 'Select'}</h3>
-            <button onClick={handleAddToList}>ADD MEALS TO LIST</button>
+            { selectMode && mealsSelected.length ? <AddMealsToList mealids={mealsSelected} onSubmit={clearSelected} /> : ''}
+
             <h3>Menu</h3>
             <AddToMenu onMenuUpdated={loadMenus} />
 

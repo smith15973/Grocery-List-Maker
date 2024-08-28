@@ -6,7 +6,8 @@ export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
 
     const { date, meals } = menuDay;
-    const formattedDate = (new Date(date)).toISOString().split('T')[0];
+    // const formattedDate = (new Date(date)).toISOString().split('T')[0];
+    const formattedDate = (new Date(date)).toUTCString().split(' ').slice(0, 4).join(' ');
 
     let daySelected = mealids.every(id => mealsSelected.includes(id));
 

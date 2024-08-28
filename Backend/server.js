@@ -129,16 +129,19 @@ app.post('/menus', async (req, res) => {
 })
 
 app.put('/menus/addToList', async (req, res) => {
-    const { mealids, listID } = req.body;
-    let list;
-    if (listID) {
-        list = await List.findById(listID);
-    } else {
-        list = new List({ name: "New List", ingredients: [] });
+    const { mealids, listName } = req.body;
+
+    if (!listName || listName === '' || mealids.length === 0) {
+        return res.status(400).json({ error: 'List name and meals selected are required' });
+    }
+    let list = await List.findOne({ name: listName });
+    if (!list) {
+        console.log('creating new list')
+        list = new List({ name: listName, ingredients: [] });
     }
 
     const meals = await Meal.find({ _id: { $in: mealids } }).populate('main sides');
-    console.log(meals)
+    
     meals.map(meal => {
         meal.main.ingredients.map(ingredient => {
             const { item, quantity, unit } = ingredient;
