@@ -9,7 +9,7 @@ import ListSelect from './ListSelect';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-export default function AddMealsToList({ mealids, onSubmit }) {
+export default function AddMealsToList({ mealids, onSubmit, disabled }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -52,8 +52,8 @@ export default function AddMealsToList({ mealids, onSubmit }) {
 
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Add Meals to List
+            <Button disabled={disabled} variant="text" onClick={handleClickOpen}>
+                Add to List
             </Button>
             <Dialog
                 open={open}

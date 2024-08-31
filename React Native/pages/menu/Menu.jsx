@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { AddToMenu } from "./AddToMenu";
-import './Menu.css';
-import { MenuDay } from "./MenuDay";
-import AddMealsToList from "./AddMealsToList";
-import { Button, Paper } from "@mui/material";
+// import { AddToMenu } from "./AddToMenu";
+// import { MenuDay } from "./MenuDay";
+// import AddMealsToList from "./AddMealsToList";
+// import { Button, Paper } from "@mui/material";
+import { Text, View } from "react-native";
 
 export function Menu() {
     const [menus, setMenus] = useState([]);
@@ -59,19 +59,19 @@ export function Menu() {
     }
 
     return (
-        <>
-            <Paper square sx={{ pb: '50px' }}>
+        <View>
+            {/* <Paper square sx={{ pb: '50px' }}>
                 <div style={{ display: "inline-flex", justifyContent: "between", alignItems: "end" }}>
                     <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} />
                     <Button variant="text" onClick={handleSelectClick}>{selectMode ? 'Cancel' : 'Select'}</Button>
                 </div>
-            </Paper>
+            </Paper> */}
 
 
-            <h3>Menu</h3>
-            <AddToMenu onMenuUpdated={loadMenus} />
+            <Text>Menu</Text>
+            {/* <AddToMenu onMenuUpdated={loadMenus} /> */}
 
-            <div className="menu">
+            <View className="menu">
                 {menus.map(menu => {
                     function mealSort(a, b) {
                         const order = ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert'];
@@ -81,15 +81,16 @@ export function Menu() {
                     const meals = menu.meals.sort(mealSort);
                     return (
 
-                        <div key={menu._id}>
-                            <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
+                        <View key={menu._id}>
+                            {/* <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} /> */}
+                            <Text>{menu._id}</Text>
 
-                        </div>
+                        </View>
 
 
                     );
                 })}
-            </div>
-        </>
+            </View>
+        </View>
     );
 }

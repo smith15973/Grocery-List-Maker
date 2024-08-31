@@ -21,8 +21,6 @@ const StyledFab = styled(Fab)({
 export function Navbar() {
   return (
     <React.Fragment>
-      <Paper square sx={{ pb: '50px' }}>
-      </Paper>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <IconButton color="inherit" aria-label="open drawer">

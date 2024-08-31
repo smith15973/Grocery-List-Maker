@@ -1,11 +1,9 @@
-import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-
+import { Text, View } from 'react-native'
 import { ListOfItems } from './ListOfItems';
 
-export function ShowList() {
-    const routeParams = useParams()
+export function ShowList({ route }) {
 
     const [list, setList] = useState({ ingredients: [] })
 
@@ -15,22 +13,23 @@ export function ShowList() {
 
     async function loadList() {
         try {
-            const response = await axios.get(`http://localhost:3000/lists/${routeParams.id}`)
+            const response = await axios.get(`http://localhost:3000/lists/${route.params.id}`)
             setList(response.data)
         } catch (e) {
             console.log(e)
         }
     }
 
+
     const ingredientList = list.ingredients.sort((a, b) => {
         return a.complete === b.complete ? 0 : a.complete ? 1 : -1;
     }).map((ingredient) => ingredient);
 
     return (
-        <div style={{paddingBottom: '5%'}}>
-            <h1>{list.name}</h1>
+        <View>
+            <Text>Name {list.name}</Text>
             <ListOfItems list={ingredientList} listId={list._id} loadList={loadList} baseURL="http://localhost:3000/lists" />
-        </div>
+        </View>
 
 
 
