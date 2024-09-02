@@ -20,6 +20,7 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
     }
 
     function handleChange(name, value) {
+        console.log(name, value)
         setAddIngredientForm({ ...addIngredientForm, [name]: value });
     }
 

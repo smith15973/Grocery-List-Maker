@@ -32,27 +32,7 @@ function HomeScreen() {
     </View>
   );
 }
-function MenuScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Menu Screen</Text>
-    </View>
-  );
-}
-function RecipesScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Recipes />
-    </View>
-  );
-}
-function ListsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Lists Screen</Text>
-    </View>
-  );
-}
+
 
 
 
