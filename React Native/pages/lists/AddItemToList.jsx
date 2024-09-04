@@ -5,6 +5,7 @@ import { IngredientUnitSelect } from './IngredientUnitSelect'
 import { IngredientSelect } from './IngredientSelect'
 import { IngredientQuantityInput } from './IngredientQuantityInput'
 import { Icon, ListItem } from '@rneui/themed'
+import { View } from 'react-native'
 
 export function AddItemToList({ onItemAdded, listId, baseURL }) {
 
@@ -12,9 +13,8 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
     const [addIngredientForm, setAddIngredientForm] = useState({ item: '', quantity: '', unit: '' })
 
     async function handleAddIngredient() {
-        console.log(addIngredientForm)
-        return
-        const response = await axios.post(`${baseURL}/${listId}`, { ...addIngredientForm, item: addIngredientForm.item.ingredientId })
+        console.log('adding ingredient', addIngredientForm)
+        const response = await axios.post(`${baseURL}/${listId}`, addIngredientForm)
         onItemAdded()
         setAddIngredientForm({ item: '', quantity: '', unit: '' })
     }
@@ -26,28 +26,42 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
 
     return (
         <ListItem>
-            <ListItem.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <IngredientSelect 
-                    onAddIngredientFormUpdated={handleChange} 
-                    addIngredientForm={addIngredientForm} 
-                    style={{ flexGrow: 1, flexShrink: 1, marginRight: 5 }}
+
+            <ListItem.Content style={{ width: '100%', flexDirection: 'row' }}>
+                <IngredientSelect
+                    onAddIngredientFormUpdated={handleChange}
+                    addIngredientForm={addIngredientForm}
+                    style={{ width: '40%' }}
                 />
-    
-                <IngredientQuantityInput 
-                    onAddIngredientFormUpdated={handleChange} 
-                    addIngredientForm={addIngredientForm} 
-                    style={{ flexGrow: 0, flexShrink: 1, marginRight: 5, maxWidth: '20%' }}
+                <IngredientQuantityInput
+                    onAddIngredientFormUpdated={handleChange}
+                    addIngredientForm={addIngredientForm}
+                    style={{
+                        backgroundColor: '#F7F7F7',
+                        marginLeft: 0,
+                        borderWidth: 1,
+                        borderColor: 'black',
+                        borderRadius: 8,
+                        padding: 23,
+                        width: '25%',
+                    }}
                 />
-                <IngredientUnitSelect 
-                    onAddIngredientFormUpdated={handleChange} 
-                    addIngredientForm={addIngredientForm} 
-                    style={{ flexGrow: 0, flexShrink: 1, marginRight: 5, maxWidth: '20%' }}
+                <IngredientUnitSelect
+                    onAddIngredientFormUpdated={handleChange}
+                    addIngredientForm={addIngredientForm}
+                    style={{ width: '35%' }}
                 />
             </ListItem.Content>
+
+
+
+
+
+
             <Icon
-                name='plus-circle'
+                name='plus'
                 type='material-community'
                 onPress={handleAddIngredient} />
-        </ListItem>
+        </ListItem >
     )
 }

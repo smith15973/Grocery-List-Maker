@@ -67,11 +67,31 @@ app.get('/lists', async (req, res) => {
     const lists = await List.find().populate('ingredients.item');
     return res.json(lists)
 })
+app.post('/lists', async (req, res) => {
+    const { name } = req.body
+    if (!name || name === '') {
+        return res.status(400).json({ error: 'List name is required' });
+    }
+    const list = new List(req.body);
+    await list.save();
+    return res.json(list)
+})
 app.get('/lists/:id', async (req, res) => {
     const list = await List.findById(req.params.id).populate('ingredients.item');
     return res.json(list)
 })
 app.post('/lists/:id', async (req, res) => {
+    const { item, quantity, unit } = req.body
+    if (!item || item === '') {
+        return res.status(400).json({ error: 'Item is required' });
+    }
+
+    if (!mongoose.isValidObjectId(item)) {
+        console.log('creating new ingredient')
+        const ingredient = new Ingredient({ name: item });
+        await ingredient.save();
+        req.body.item = ingredient._id;
+    }
     const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
     return res.json(list)
 })
@@ -92,8 +112,7 @@ app.delete('/lists/:listId/:ingredientId', async (req, res) => {
     res.json(list)
 })
 
-app.post('/lists', async (req, res) => {
-})
+
 
 app.get('/menus', async (req, res) => {
     const menus = await Menu.find()
@@ -141,7 +160,7 @@ app.put('/menus/addToList', async (req, res) => {
     }
 
     const meals = await Meal.find({ _id: { $in: mealids } }).populate('main sides');
-    
+
     meals.map(meal => {
         meal.main.ingredients.map(ingredient => {
             const { item, quantity, unit } = ingredient;

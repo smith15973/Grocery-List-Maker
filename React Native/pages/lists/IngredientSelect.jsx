@@ -1,10 +1,10 @@
 import Dropdown from 'react-native-input-select';
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, StyleSheet } from "react-native";
 
 
-export function IngredientSelect({ onAddIngredientFormUpdated, addIngredientForm }) {
+export function IngredientSelect({ onAddIngredientFormUpdated, addIngredientForm, style }) {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [ingredientOptions, setIngredientOptions] = useState([])
@@ -23,45 +23,49 @@ export function IngredientSelect({ onAddIngredientFormUpdated, addIngredientForm
     }
 
     return (
-
-        <Dropdown
-            label="Ingredient"
-            placeholder="Select or add ingredients..."
-            options={ingredientOptions}
-            selectedValue={addIngredientForm.item}
-            onValueChange={(value) => { onAddIngredientFormUpdated('item', value) }}
-            isSearchable
-            primaryColor={'deepskyblue'}
-            listEmptyComponent={
-                <View
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingVertical: 10,
-                    }}>
-                    <Pressable
-                        onPress={() => {
-                            onAddIngredientFormUpdated('item', searchTerm)
-                            setIngredientOptions([
-                                ...ingredientOptions,
-                                { label: searchTerm, value: searchTerm },
-                            ]);
-
-                        }}
+        <View style={style}>
+            <Dropdown
+                dropdownStyle={{ minHeight: 65 }}
+                placeholder="Item"
+                options={ingredientOptions}
+                selectedValue={addIngredientForm.item}
+                onValueChange={(value) => { onAddIngredientFormUpdated('item', value) }}
+                isSearchable
+                primaryColor={'deepskyblue'}
+                listEmptyComponent={
+                    <View
                         style={{
-                            backgroundColor: 'red',
-                            borderRadius: 5,
-                            width: 120,
-                            padding: 5,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            paddingVertical: 10,
                         }}>
-                        <Text style={{ color: 'white', textAlign: 'center' }}>
-                            Add ingredient
-                        </Text>
-                    </Pressable>
-                </View>
-            }
-            searchControls={{ searchCallback: value => { setSearchTerm(value) } }}
-        />
+                        <Pressable
+                            onPress={() => {
+                                onAddIngredientFormUpdated('item', searchTerm)
+                                setIngredientOptions([
+                                    ...ingredientOptions,
+                                    { label: searchTerm, value: searchTerm },
+                                ]);
+
+                            }}
+                            style={{
+                                backgroundColor: 'red',
+                                borderRadius: 5,
+                                width: 120,
+                                padding: 5,
+                            }}>
+                            <Text style={{ color: 'white', textAlign: 'center' }}>
+                                Add ingredient
+                            </Text>
+                        </Pressable>
+                    </View>
+                }
+                searchControls={{
+                    searchCallback: value => { setSearchTerm(value) },
+                    textInputProps: { placeholder: 'Search or Add items' }
+                }}
+            />
+        </View>
     );
 }

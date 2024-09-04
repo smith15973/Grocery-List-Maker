@@ -1,7 +1,7 @@
-import { TextInput, Alert } from 'react-native';
+import { View, TextInput, Alert, StyleSheet } from 'react-native';
 
 
-export function IngredientQuantityInput({ onAddIngredientFormUpdated, addIngredientForm }) {
+export function IngredientQuantityInput({ onAddIngredientFormUpdated, addIngredientForm, style }) {
 
 
     function handleChange(text) {
@@ -33,10 +33,12 @@ export function IngredientQuantityInput({ onAddIngredientFormUpdated, addIngredi
             editable
             value={addIngredientForm.quantity}
             onChangeText={(text) => handleChange(text)}
-            placeholder='Quantity'
+            placeholder='Qty'
+            placeholderTextColor={'black'}
             inputMode='number'
             maxLength={4}
-            maxWidth='30%'
+            style={style}
         />
+
     );
 }

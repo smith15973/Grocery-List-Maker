@@ -8,7 +8,9 @@ const Ingredient = new Schema({
     },
     group: {
         type: String,
+        default: 'Other',
         required: true,
+        
     },
     stores: [{
         name: {
