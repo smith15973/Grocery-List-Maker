@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView} from 'react-native'
 import { ListOfItems } from './ListOfItems';
 import { useNavigation } from '@react-navigation/native';
 
@@ -32,7 +32,6 @@ export function ShowList({ route }) {
 
     return (
         <SafeAreaView>
-            <Text>Name {list.name}</Text>
             <ListOfItems list={ingredientList} listId={list._id} loadList={loadList} baseURL="http://localhost:3000/lists" />
         </SafeAreaView>
 

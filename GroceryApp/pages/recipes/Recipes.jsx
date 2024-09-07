@@ -14,7 +14,7 @@ export function Recipes() {
 
     useEffect(() => { loadRecipes() }, [])
 
-    navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('NewRecipe')}/> })
+    navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('New Recipe')}/> })
 
 
 

@@ -52,7 +52,7 @@ export default function AddMealsToList({ mealids, onSubmit, disabled }) {
 
     return (
         <React.Fragment>
-            <Button disabled={disabled} variant="text" onClick={handleClickOpen}>
+            <Button disabled={!disabled} variant="text" onClick={handleClickOpen}>
                 Add to List
             </Button>
             <Dialog

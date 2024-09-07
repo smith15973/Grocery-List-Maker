@@ -6,7 +6,7 @@ import { IngredientSelect } from './IngredientSelect'
 import { IngredientQuantityInput } from './IngredientQuantityInput'
 import { ListItem } from '@rneui/themed'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View } from 'react-native'
+
 
 
 export function AddItemToList({ onItemAdded, listId, baseURL }) {
@@ -15,8 +15,9 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
     const [addIngredientForm, setAddIngredientForm] = useState({ item: '', quantity: '', unit: '' })
 
     async function handleAddIngredient() {
-        console.log('adding ingredient', addIngredientForm)
-        const response = await axios.post(`${baseURL}/${listId}`, addIngredientForm)
+        if (baseURL) {
+            const response = await axios.post(`${baseURL}/${listId}`, addIngredientForm)
+        }
         onItemAdded()
         setAddIngredientForm({ item: '', quantity: '', unit: '' })
     }
@@ -27,7 +28,7 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
     }
 
     return (
-        <ListItem>
+        <ListItem bottomDivider>
 
             <ListItem.Content style={{ width: '100%', flexDirection: 'row', alignItems: 'top', height: 64 }}>
 
@@ -61,6 +62,6 @@ export function AddItemToList({ onItemAdded, listId, baseURL }) {
                 type='material-community'
                 size={20}
                 onPress={handleAddIngredient} />
-        </ListItem >
+        </ListItem>
     )
 }

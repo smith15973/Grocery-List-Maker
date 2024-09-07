@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-// import { AddToMenu } from "./AddToMenu";
-// import { MenuDay } from "./MenuDay";
+import { AddToMenu } from "./AddToMenu";
+import { MenuDay } from "./MenuDay";
 // import AddMealsToList from "./AddMealsToList";
 // import { Button, Paper } from "@mui/material";
 import { Text, View } from "react-native";
@@ -68,8 +68,7 @@ export function Menu() {
             </Paper> */}
 
 
-            <Text>Menu</Text>
-            {/* <AddToMenu onMenuUpdated={loadMenus} /> */}
+            <AddToMenu onMenuUpdated={loadMenus} />
 
             <View className="menu">
                 {menus.map(menu => {
@@ -82,8 +81,8 @@ export function Menu() {
                     return (
 
                         <View key={menu._id}>
-                            {/* <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} /> */}
-                            <Text>{menu._id}</Text>
+                            <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
+                            {/* <Text>{menu._id}</Text> */}
 
                         </View>
 

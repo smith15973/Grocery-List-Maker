@@ -9,6 +9,8 @@ import { Recipes } from './pages/recipes/Recipes';
 import { Lists } from './pages/lists/Lists';
 import { Menu } from './pages/menu/Menu';
 import { ShowList } from './pages/lists/ShowList';
+import { ShowRecipe } from './pages/recipes/ShowRecipe';
+import { NewRecipe } from './pages/recipes/NewRecipe';
 
 
 
@@ -50,6 +52,8 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Recipes" component={Recipes} />
+        <Stack.Screen name="Recipe" component={ShowRecipe} />
+        <Stack.Screen name="New Recipe" component={NewRecipe} />
         <Stack.Screen name="Lists" component={Lists} />
         <Stack.Screen name="List" component={ShowList} />
       </Stack.Navigator>

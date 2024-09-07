@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ListItem, Icon } from '@rneui/themed';
+import { ListItem, Icon, Button } from '@rneui/themed';
 
 export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
     const handleToggle = (ingredientId) => async () => {
@@ -13,7 +13,30 @@ export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
     };
 
     return (
-        <ListItem bottomDivider>
+        <ListItem.Swipeable bottomDivider
+        
+        // onPress={() => navigation.navigate('List', { id: list._id })}
+      onLongPress={() => console.log('long press')}
+      leftContent={(reset) => (
+        <Button
+          title="Info"
+          onPress={() => reset()}
+          icon={{ name: 'info', color: 'white' }}
+          buttonStyle={{ minHeight: '100%' }}
+        />
+      )}
+      rightContent={(reset) => (
+        <Button
+          title="Delete"
+          onPress={() => handleDelete(ingredient._id)}
+          icon={{ name: 'delete', color: 'white' }}
+          buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+        />
+      )}
+        
+        
+        
+        >
             {ingredient.complete !== undefined ? (
                 <ListItem.CheckBox
                     iconType="material-community"
@@ -31,11 +54,6 @@ export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
                     {ingredient.quantity ? `${ingredient.quantity} ${ingredient.unit}` : ''}
                 </ListItem.Subtitle>
             </ListItem.Content>
-            <Icon
-                name="delete"
-                type="material-community"
-                onPress={() => handleDelete(ingredient._id)}
-            />
-        </ListItem>
+        </ListItem.Swipeable>
     );
 }
