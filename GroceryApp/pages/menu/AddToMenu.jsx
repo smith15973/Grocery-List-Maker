@@ -2,6 +2,8 @@ import { Text } from "@rneui/base";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button, View } from "react-native";
+import DatePicker from "react-native-date-picker";
+import { AddtoMenuModal } from "./AddToMenuModal";
 
 
 export function AddToMenu({ onMenuUpdated }) {
@@ -41,10 +43,9 @@ export function AddToMenu({ onMenuUpdated }) {
         setAddToMenuForm({ ...addToMenuForm, [name]: value })
     }
 
-
+    const [date, setDate] = useState(new Date())
     return (
         <View>
-            <Text>Add to Menu</Text>
 
             {/* <input
                     onChange={(e) => { handleChange(e) }}
@@ -86,7 +87,8 @@ export function AddToMenu({ onMenuUpdated }) {
                     <option value="Dessert">Dessert</option>
                 </select> */}
 
-            <Button title="Add to Menu" onPress={addToMenu} type="submit" />
+            {/* <Button title="Add to Menu" onPress={addToMenu} type="submit" /> */}
+            <AddtoMenuModal />
 
         </View>
     )

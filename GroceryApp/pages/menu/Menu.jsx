@@ -5,6 +5,7 @@ import { MenuDay } from "./MenuDay";
 // import AddMealsToList from "./AddMealsToList";
 // import { Button, Paper } from "@mui/material";
 import { Text, View } from "react-native";
+import { AddtoMenuModal } from "./AddToMenuModal";
 
 export function Menu() {
     const [menus, setMenus] = useState([]);
@@ -82,7 +83,6 @@ export function Menu() {
 
                         <View key={menu._id}>
                             <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
-                            {/* <Text>{menu._id}</Text> */}
 
                         </View>
 
