@@ -29,7 +29,7 @@ export function ListSelect({ onListNameChange, listName }) {
         <View>
             <Dropdown
                 dropdownStyle={{ minHeight: 65 }}
-                placeholder="Item"
+                placeholder="Select List"
                 options={listOptions}
                 selectedValue={listName}
                 onValueChange={(value) => { onListNameChange(value) }}

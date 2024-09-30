@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { View, StyleSheet, Modal, Button } from 'react-native';
 
 
-export function CalendarModal({ date, setDate }) {
+export function CalendarModal({ name, onDateChange, date }) {
   
   const [open, setOpen] = useState(false);
 
@@ -25,7 +25,7 @@ export function CalendarModal({ date, setDate }) {
           <DateTimePicker
             mode="single"
             date={date}
-            onChange={(params) => { setDate(params.date), setOpen(false) }}
+            onChange={(params) => { onDateChange(name, params.date), setOpen(false) }}
           />
         </View>
       </Modal>

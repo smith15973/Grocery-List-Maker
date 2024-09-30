@@ -115,7 +115,10 @@ app.delete('/lists/:listId/:ingredientId', async (req, res) => {
 
 
 app.get('/menus', async (req, res) => {
-    const menus = await Menu.find()
+    let { startDate, endDate } = req.query;
+    console.log(startDate, endDate)
+    startDate = new Date(startDate);
+    const menus = await Menu.find( { date: { $gte: startDate, $lte: endDate } })
         .populate({
             path: 'meals',
             populate: {
@@ -124,7 +127,7 @@ app.get('/menus', async (req, res) => {
         })
         .sort({ date: 1 });
 
-    console.log(menus);
+    
     menus.map(menu => {
         menu.meals.map(meal => {
             console.log(meal)

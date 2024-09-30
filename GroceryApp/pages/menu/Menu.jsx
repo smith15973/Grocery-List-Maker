@@ -1,23 +1,52 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { AddToMenu } from "./AddToMenu";
 import { MenuDay } from "./MenuDay";
 import AddMealsToList from "./AddMealsToList";
-import { Text, View, Button } from "react-native";
-import { AddtoMenuModal } from "./AddToMenuModal";
+import { View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export function Menu() {
     const navigation = useNavigation();
     const [menus, setMenus] = useState([]);
 
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 20)));
+    
+    
+
+    function generateDateRange() {
+        
+        const days = [];
+        let currentDate = new Date(startDate);
+        
+        while (currentDate <= endDate) {
+            days.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return days;
+    }
+    
+
+
+
     async function loadMenus() {
-        const response = await axios.get('http://localhost:3000/menus');
+        const response = await axios.get('http://localhost:3000/menus', 
+        {
+            params: {
+                startDate: startDate,
+                endDate: endDate,
+            }
+        }
+        );
+        const menuData = response.data;
+        const allDates = generateDateRange();
         setMenus(response.data);
     }
 
     useEffect(() => {
         loadMenus();
+        generateDateRange();
     }, []);
 
 
@@ -60,43 +89,33 @@ export function Menu() {
     }
 
     navigation.setOptions({
-        headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />, 
+        headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />,
+
         headerLeft: () => <Button title={selectMode ? "Cancel" : "Select"}
             onPress={handleSelectClick}
         />
     });
 
     return (
-        <View>
-            {/* <Paper square sx={{ pb: '50px' }}>
-                <div style={{ display: "inline-flex", justifyContent: "between", alignItems: "end" }}>
-                    <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} />
-                    <Button variant="text" onClick={handleSelectClick}>{selectMode ? 'Cancel' : 'Select'}</Button>
-                </div>
-            </Paper> */}
+
+        <View className="menu">
+            {menus.map(menuDay => {
+                function mealSort(a, b) {
+                    const order = ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert'];
+                    return order.indexOf(a.type) - order.indexOf(b.type);
+                }
+
+                // const meals = menuDay.meals.sort(mealSort);
+                return (
+
+                    <View key={menuDay._id}>
+                        <MenuDay menuDay={menuDay} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
+                    </View>
 
 
-
-
-            <View className="menu">
-                {menus.map(menu => {
-                    function mealSort(a, b) {
-                        const order = ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert'];
-                        return order.indexOf(a.type) - order.indexOf(b.type);
-                    }
-
-                    const meals = menu.meals.sort(mealSort);
-                    return (
-
-                        <View key={menu._id}>
-                            <MenuDay menuDay={menu} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
-
-                        </View>
-
-
-                    );
-                })}
-            </View>
+                );
+            })}
         </View>
+
     );
 }
