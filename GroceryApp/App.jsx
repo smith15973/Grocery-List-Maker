@@ -12,10 +12,12 @@ import { NewRecipe } from './pages/recipes/NewRecipe';
 import { Icon } from '@rneui/themed';
 
 
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 
 function MenuStack() {
-  const Stack = createNativeStackNavigator();
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="Menu" component={Menu} />
@@ -25,7 +27,7 @@ function MenuStack() {
 }
 
 function ListsStack() {
-  const Stack = createNativeStackNavigator();
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="Lists" component={Lists} />
@@ -35,7 +37,6 @@ function ListsStack() {
 }
 
 function RecipesStack() {
-  const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator>
       <Stack.Screen name="Recipes" component={Recipes} />
@@ -50,7 +51,7 @@ function TabBar() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Menu"
+        name="MenuTab"
         component={MenuStack}
         options={{
           headerShown: false,
@@ -60,7 +61,7 @@ function TabBar() {
         }}
       />
       <Tab.Screen
-        name="Lists"
+        name="ListsTab"
         component={ListsStack}
         options={{
           headerShown: false,
@@ -70,7 +71,7 @@ function TabBar() {
         }}
       />
       <Tab.Screen
-        name="Recipes"
+        name="RecipesTab"
         component={RecipesStack}
         options={{
           headerShown: false,
@@ -84,7 +85,7 @@ function TabBar() {
 }
 
 
-const Tab = createBottomTabNavigator();
+
 
 function App() {
   return (

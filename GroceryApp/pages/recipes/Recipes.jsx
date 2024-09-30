@@ -12,9 +12,12 @@ export function Recipes() {
         setRecipes(response.data);
     }
 
-    useEffect(() => { loadRecipes() }, [])
+    useEffect(() => { 
+        loadRecipes();
+        navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('New Recipe')}/> });
+     }, [])
 
-    navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('New Recipe')}/> })
+    
 
 
 

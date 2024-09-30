@@ -21,7 +21,13 @@ export function ShowRecipe({ route }) {
             console.log(e)
         }
     }
-    navigation.setOptions({ title: recipe.name })
+    useEffect(() => {
+        loadRecipe()
+        navigation.setOptions({
+            title: recipe.name,
+        })
+    }, [recipe._id])
+
 
     const ingredientsList = recipe.ingredients.map(ingredient => ingredient)
     return (

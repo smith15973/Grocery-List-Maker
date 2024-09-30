@@ -14,6 +14,9 @@ export function ShowList({ route }) {
     useEffect(() => {
         loadList()
     }, [])
+    useEffect(() => {
+        navigation.setOptions({ title: list.name })
+    }, [list.name])
 
     async function loadList() {
         try {
@@ -23,7 +26,7 @@ export function ShowList({ route }) {
             console.log(e)
         }
     }
-    navigation.setOptions({ title: list.name })
+    
 
 
     const ingredientList = list.ingredients.sort((a, b) => {

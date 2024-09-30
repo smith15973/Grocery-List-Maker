@@ -14,13 +14,18 @@ export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
     let daySelected = mealids.every(id => mealsSelected.includes(id));
 
+    function mealSort(a, b) {
+        const order = ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert'];
+        return order.indexOf(a.type) - order.indexOf(b.type);
+    }
 
+    
 
     return (
 
         <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
-                style={daySelected ? styles.menuDaySelected : styles.menuDay}
+                style={daySelected && meals.length ? styles.menuDaySelected : styles.menuDay}
                 onPress={() => onSelectDay(mealids)}
                 className={`menu-date-box ${daySelected ? 'selected' : ''}`}
             >
@@ -28,7 +33,7 @@ export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
             </TouchableOpacity>
 
             <ScrollView horizontal style={{ flexDirection: "row" }}>
-                {meals.map(meal => (
+                {meals.sort(mealSort).map(meal => (
                     <MenuMeal key={meal._id} meal={meal} onSelect={onMealSelect} mealsSelected={mealsSelected} />
                 ))}
             </ScrollView>

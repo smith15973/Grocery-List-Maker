@@ -18,12 +18,11 @@ export function Lists() {
         setLists(response.data);
     }
 
-    navigation.setOptions({ headerRight: () => <NewListModal onListCreated={loadLists} /> })
 
-
-
-
-    useEffect(() => { loadLists() }, [])
+    useEffect(() => { 
+        loadLists();
+        navigation.setOptions({ headerRight: () => <NewListModal onListCreated={loadLists} /> })
+     }, [])
 
     return (
         <ScrollView>

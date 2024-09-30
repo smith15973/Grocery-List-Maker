@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { MenuDay } from "./MenuDay";
 import AddMealsToList from "./AddMealsToList";
-import { View, Button, ScrollView } from "react-native";
+import { Button } from "react-native";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+import { AddToMenu } from "./AddToMenu";
 
 export function Menu() {
     const ITEM_HEIGHT = 110;
@@ -17,6 +18,8 @@ export function Menu() {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [selectMode, setSelectMode] = useState(false);
+    const [mealsSelected, setMealsSelected] = useState([]);
 
 
 
@@ -36,23 +39,27 @@ export function Menu() {
 
 
     async function loadMenusInRange(startDate, endDate) {
-        const response = await axios.get('http://localhost:3000/menus',
-            {
-                params: {
-                    startDate: startDate,
-                    endDate: endDate,
-                }
-            }
-        );
-        const menuData = response.data;
-        const allDays = generateDaysRange(startDate, endDate);
+        try {
+            const response = await axios.get('http://localhost:3000/menus',
+                {
+                    params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                    }
+                },
+            );
+            const menuData = response.data;
+            const allDays = generateDaysRange(startDate, endDate);
 
-        const mergedData = allDays.map(day => {
-            const menuDay = menuData.find(menuDay => new Date(menuDay.date).toDateString() === day.toDateString());
-            return menuDay || { date: day, meals: [] };
-        })
+            const mergedData = allDays.map(day => {
+                const menuDay = menuData.find(menuDay => new Date(menuDay.date).toDateString() === day.toDateString());
+                return menuDay || { date: day, meals: [] };
+            })
 
-        setMenus(mergedData);
+            setMenus(mergedData);
+        } catch (err) {
+            console.log(err.request);
+        }
     }
 
     async function loadOlderMenuDays() {
@@ -79,11 +86,19 @@ export function Menu() {
         loadMenusInRange(oneDayBeforeStartDate, initialEndDate);
     }, []);
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <AddToMenu onMenuUpdated={loadMenusInRange} />,
+
+            headerLeft: () => <Button title={selectMode ? "Cancel" : "Select"}
+                onPress={handleSelectClick}
+            />
+        });
+    }, [[navigation, selectMode, mealsSelected]])
 
 
-    const [selectMode, setSelectMode] = useState(false);
 
-    const [mealsSelected, setMealsSelected] = useState([]);
+
 
     function handleSelectClick() {
         setSelectMode(!selectMode);
@@ -118,15 +133,11 @@ export function Menu() {
         setMealsSelected([]);
     }
 
-    navigation.setOptions({
-        headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />,
 
-        headerLeft: () => <Button title={selectMode ? "Cancel" : "Select"}
-            onPress={handleSelectClick}
-        />
-    });
 
-    
+    <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />
+
+
 
     return (
         <FlatList
@@ -146,28 +157,7 @@ export function Menu() {
             keyExtractor={(item) => item.date}
             initialScrollIndex={1}
 
-
-
         />
-
-        // <ScrollView ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16}>
-        //     {menus.map(menuDay => {
-        //         function mealSort(a, b) {
-        //             const order = ['Breakfast', 'Lunch', 'Snack', 'Dinner', 'Dessert'];
-        //             return order.indexOf(a.type) - order.indexOf(b.type);
-        //         }
-
-        //         // const meals = menuDay.meals.sort(mealSort);
-        //         return (
-
-        //             <View key={menuDay._id}>
-        //                 <MenuDay menuDay={menuDay} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
-        //             </View>
-
-
-        //         );
-        //     })}
-        // </ScrollView>
 
     );
 }
