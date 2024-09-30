@@ -1,6 +1,7 @@
 import { ScrollView, Text, Touchable, TouchableHighlight, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { MenuMeal } from "./MenuMeal";
+import styles from "../../styles";
 
 export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
@@ -17,8 +18,14 @@ export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
     return (
 
-        <View className="menu-day-row">
-            <TouchableOpacity style={{ width: '20%', height: 200, backgroundColor: 'green', borderRadius: 10, padding: 5, flexDirection: "row" }} onPress={() => onSelectDay(mealids)} className={`menu-date-box ${daySelected ? 'selected' : ''}`} onLongPress={() => console.log(`LONG PRESS DATE: ${date}`)}><Text>{formattedDate}</Text></TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+                style={daySelected ? styles.menuDaySelected : styles.menuDay}
+                onPress={() => onSelectDay(mealids)}
+                className={`menu-date-box ${daySelected ? 'selected' : ''}`}
+            >
+                <Text>{formattedDate}</Text>
+            </TouchableOpacity>
 
             <ScrollView horizontal style={{ flexDirection: "row" }}>
                 {meals.map(meal => (

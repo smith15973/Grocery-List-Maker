@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button, View } from "react-native";
 import DatePicker from "react-native-date-picker";
 import { AddtoMenuModal } from "./AddToMenuModal";
+import { CalendarModal } from "./CalendarModal";
 
 
 export function AddToMenu({ onMenuUpdated }) {
@@ -88,7 +89,7 @@ export function AddToMenu({ onMenuUpdated }) {
                 </select> */}
 
             {/* <Button title="Add to Menu" onPress={addToMenu} type="submit" /> */}
-            <AddtoMenuModal />
+            <CalendarModal date={date} setDate={setDate} />
 
         </View>
     )

@@ -1,25 +1,46 @@
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Modal, Button } from 'react-native';
 
-export function CalendarModal() {
-  const [date, setDate] = useState(dayjs());
+
+export function CalendarModal({ date, setDate }) {
+  
+  const [open, setOpen] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <DateTimePicker
-        mode="single"
-        date={date}
-        onChange={(params) => {setDate(params.date)}}
-      />
+    <View>
+      <Button title={date.toString().slice(0, 16)} color="green" onPress={() => setOpen(true)} />
+      <Modal
+        style={styles.container}
+        animationType="slide"
+        transparent={false}
+        visible={open}
+        onRequestClose={() => {
+          setOpen(false);
+        }}
+
+      >
+        <View style={styles.centered}>
+          <DateTimePicker
+            mode="single"
+            date={date}
+            onChange={(params) => { setDate(params.date), setOpen(false) }}
+          />
+        </View>
+      </Modal>
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
+  centered: {
+    flex: 1,
     // backgroundColor: '#F5FCFF',
+    justifyContent: 'top',
+    alignItems: 'center',
+    
+    marginTop: 80,
   },
 });

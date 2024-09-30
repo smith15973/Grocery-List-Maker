@@ -2,12 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { AddToMenu } from "./AddToMenu";
 import { MenuDay } from "./MenuDay";
-// import AddMealsToList from "./AddMealsToList";
-// import { Button, Paper } from "@mui/material";
-import { Text, View } from "react-native";
+import AddMealsToList from "./AddMealsToList";
+import { Text, View, Button } from "react-native";
 import { AddtoMenuModal } from "./AddToMenuModal";
+import { useNavigation } from "@react-navigation/native";
 
 export function Menu() {
+    const navigation = useNavigation();
     const [menus, setMenus] = useState([]);
 
     async function loadMenus() {
@@ -34,13 +35,12 @@ export function Menu() {
 
 
 
-    function handleMealSelect(e) {
+    function handleMealSelect(mealId) {
         if (!selectMode) return;
-        const mealid = e.target.id
-        if (mealsSelected.includes(mealid)) {
-            setMealsSelected(mealsSelected.filter(id => id !== mealid));
+        if (mealsSelected.includes(mealId)) {
+            setMealsSelected(mealsSelected.filter(id => id !== mealId));
         } else {
-            setMealsSelected([...mealsSelected, mealid]);
+            setMealsSelected([...mealsSelected, mealId]);
         }
     }
 
@@ -59,6 +59,13 @@ export function Menu() {
         setMealsSelected([]);
     }
 
+    navigation.setOptions({
+        headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />, 
+        headerLeft: () => <Button title={selectMode ? "Cancel" : "Select"}
+            onPress={handleSelectClick}
+        />
+    });
+
     return (
         <View>
             {/* <Paper square sx={{ pb: '50px' }}>
@@ -69,7 +76,7 @@ export function Menu() {
             </Paper> */}
 
 
-            <AddToMenu onMenuUpdated={loadMenus} />
+
 
             <View className="menu">
                 {menus.map(menu => {

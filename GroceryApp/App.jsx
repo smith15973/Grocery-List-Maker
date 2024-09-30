@@ -1,14 +1,11 @@
 // In App.js in a new project
-
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
 import { Recipes } from './pages/recipes/Recipes';
 import { Lists } from './pages/lists/Lists';
 import { Menu } from './pages/menu/Menu';
+import { AddToMenu } from './pages/menu/AddToMenu';
 import { ShowList } from './pages/lists/ShowList';
 import { ShowRecipe } from './pages/recipes/ShowRecipe';
 import { NewRecipe } from './pages/recipes/NewRecipe';
@@ -22,6 +19,7 @@ function MenuStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Menu" component={Menu} />
+      <Stack.Screen name="Add to Menu" component={AddToMenu} />
     </Stack.Navigator>
   )
 }
@@ -86,37 +84,12 @@ function TabBar() {
 }
 
 
-
-
-
-
-
-
-
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-
       <TabBar />
-      {/* <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Menu" component={Menu} />
-        <Tab.Screen name="Lists" component={Lists} />
-        <Tab.Screen name="Recipes" component={Recipes} />
-        <Tab.Screen name="Settings" component={Recipes} />
-      </Tab.Navigator> */}
-      {/* <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Menu" component={Menu} />
-        <Stack.Screen name="Recipes" component={Recipes} />
-        <Stack.Screen name="Recipe" component={ShowRecipe} />
-        <Stack.Screen name="New Recipe" component={NewRecipe} />
-        <Stack.Screen name="Lists" component={Lists} />
-        <Stack.Screen name="List" component={ShowList} />
-      </Stack.Navigator> */}
     </NavigationContainer>
   );
 

@@ -1,13 +1,18 @@
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import styles from '../../styles';
 
 export function MenuMeal({ meal, onSelect, mealsSelected }) {
 
     const mealSelected = mealsSelected.includes(meal._id);
 
     return (
-        <View style={{backgroundColor:'red', borderRadius: 10, padding: 4, width: 150}} onClick={(e) => onSelect(e)} id={meal._id} key={meal._id} className={`menu-meal-box ${meal.type.toLowerCase()} ${mealSelected ? 'selected' : ''}`}>
+        <TouchableOpacity
+            style={mealSelected ? styles.mealSelected : styles.meal}
+            onPress={() => onSelect(meal._id)} key={meal._id}
+        >
             <Text >{meal.main.name} - {meal.type}</Text>
-        </View>
+        </TouchableOpacity>
 
     )
 }
+
