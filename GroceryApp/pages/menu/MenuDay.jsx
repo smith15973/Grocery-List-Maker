@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { MenuMeal } from "./MenuMeal";
 import styles from "../../styles";
 
-export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
+export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected, handleMenuChange }) {
 
     const mealids = menuDay.meals.map(meal => meal._id);
 
@@ -34,7 +34,7 @@ export function MenuDay({ menuDay, onMealSelect, onSelectDay, mealsSelected }) {
 
             <ScrollView horizontal style={{ flexDirection: "row" }}>
                 {meals.sort(mealSort).map(meal => (
-                    <MenuMeal key={meal._id} meal={meal} onSelect={onMealSelect} mealsSelected={mealsSelected} />
+                    <MenuMeal handleMenuChange={handleMenuChange} key={meal._id} meal={meal} onSelect={onMealSelect} mealsSelected={mealsSelected} menuId={menuDay._id} />
                 ))}
             </ScrollView>
         </View>

@@ -117,7 +117,6 @@ app.delete('/lists/:listId/:ingredientId', async (req, res) => {
 app.get('/menus', async (req, res) => {
     let { startDate, endDate } = req.query;
     startDate = new Date(startDate);
-    console.log("NO ERROR BEFORE THIS!!!", startDate, endDate)
     const menus = await Menu.find( { date: { $gte: startDate, $lte: endDate } })
         .populate({
             path: 'meals',
@@ -138,10 +137,18 @@ app.get('/menus', async (req, res) => {
     return res.json(menus)
 })
 app.post('/menus', async (req, res) => {
-    
-    const { date, main, type, sides } = req.body;
+    console.log(req.body)
+    let { date, main, type, sides } = req.body;
     const meal = new Meal({ main, type, sides });
     meal.save();
+
+    const roundDate = (date) => {
+        date.setHours(0, 0, 0, 0);
+        return date;
+    }
+
+    date = roundDate(new Date(date));
+    console.log(date)
 
     let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: meal._id } }, { new: true }).populate("meals.main");
     
@@ -152,6 +159,13 @@ app.post('/menus', async (req, res) => {
     
     return res.json(menuDay)
 
+})
+
+app.delete('/menus/:menuId/:mealId', async (req, res) => {
+    const { menuId, mealId } = req.params
+    const menu = await Menu.findByIdAndUpdate(menuId, { $pull: { meals: mealId } }, { new: true }).populate('meals.main')
+    await Meal.findByIdAndDelete(mealId)
+    res.json(menu)
 })
 
 app.put('/menus/addToList', async (req, res) => {

@@ -51,14 +51,21 @@ export function Menu() {
             const menuData = response.data;
             const allDays = generateDaysRange(startDate, endDate);
 
+
+            menuData.forEach(menuDay => {
+                // console.log(new Date(menuDay.date).toDateString());
+            })
             const mergedData = allDays.map(day => {
-                const menuDay = menuData.find(menuDay => new Date(menuDay.date).toDateString() === day.toDateString());
+                // console.log(day.toDateString());
+                
+                const menuDay = menuData.find(menuDay => new Date(menuDay.date).setHours(0,0,0,0) === day.setHours(0,0,0,0));
+                console.log(menuDay || { date: day, meals: [] });
                 return menuDay || { date: day, meals: [] };
             })
 
             setMenus(mergedData);
         } catch (err) {
-            console.log(err.request);
+            console.log(err);
         }
     }
 
@@ -88,7 +95,7 @@ export function Menu() {
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <AddToMenu onMenuUpdated={loadMenusInRange} />,
+            headerRight: () => selectMode ? <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} /> : <AddToMenu onMenuUpdated={handleMenuChange} />,
 
             headerLeft: () => <Button title={selectMode ? "Cancel" : "Select"}
                 onPress={handleSelectClick}
@@ -97,7 +104,9 @@ export function Menu() {
     }, [[navigation, selectMode, mealsSelected]])
 
 
-
+    function handleMenuChange() {
+        loadMenusInRange(startDate, endDate);
+    }
 
 
     function handleSelectClick() {
@@ -135,6 +144,7 @@ export function Menu() {
 
 
 
+
     <Button title="+" onPress={() => navigation.navigate('Add to Menu')} />
 
 
@@ -143,7 +153,7 @@ export function Menu() {
         <FlatList
             data={menus}
             renderItem={({ item }) => (
-                <MenuDay menuDay={item} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
+                <MenuDay menuDay={item} handleMenuChange={handleMenuChange} onMealSelect={handleMealSelect} onSelectDay={handleSelectDay} mealsSelected={mealsSelected} />
             )}
             onEndReached={loadNewerMenuDays}
             onEndReachedThreshold={0.8}
