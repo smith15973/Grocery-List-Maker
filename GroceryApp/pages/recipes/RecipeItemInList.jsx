@@ -1,14 +1,18 @@
 import React from 'react'
+import axios from 'axios'
 import { ListItem, Button, Icon, Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 
 
 
 
-export function RecipeItemInList({ recipe }) {
+export function RecipeItemInList({ recipe, onRecipeListUpdated }) {
   const navigation = useNavigation()
 
-  
+  async function handleDelete() {
+    await axios.delete(`http://localhost:3000/recipes/${recipe._id}`)
+    onRecipeListUpdated();
+  }
 
   const numberOfItems = recipe.ingredients.length;
 
@@ -27,7 +31,7 @@ export function RecipeItemInList({ recipe }) {
       rightContent={(reset) => (
         <Button
           title="Delete"
-          onPress={() => reset()}
+          onPress={handleDelete}
           icon={{ name: 'delete', color: 'white' }}
           buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
         />

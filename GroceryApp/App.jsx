@@ -58,6 +58,7 @@ function TabBar() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="list" type="font-awesome" color={color} size={size} />
           ),
+          title: 'Menu',
         }}
       />
       <Tab.Screen
@@ -68,6 +69,7 @@ function TabBar() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="clipboard-list" type="font-awesome-5" color={color} size={size} />
           ),
+          title: 'Lists',
         }}
       />
       <Tab.Screen
@@ -78,6 +80,7 @@ function TabBar() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="book" type="font-awesome" color={color} size={size} />
           ),
+          title: 'Recipes',
         }}
       />
     </Tab.Navigator>

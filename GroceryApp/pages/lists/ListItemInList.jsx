@@ -1,14 +1,18 @@
 import React from 'react'
+import axios from 'axios'
 import { ListItem, Button, Icon, Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 
 
 
 
-export function ListItemInList({ list }) {
+export function ListItemInList({ list, baseURL, onListUpdated }) {
   const navigation = useNavigation()
 
-  
+  async function handleDelete() {
+    await axios.delete(`${baseURL}/${list._id}`)
+    onListUpdated();
+  }
 
   const numberOfItems = list.ingredients.length;
   const numberOfItemsComplete = list.ingredients.filter((item) => item.complete).length;
@@ -28,7 +32,7 @@ export function ListItemInList({ list }) {
       rightContent={(reset) => (
         <Button
           title="Delete"
-          onPress={() => reset()}
+          onPress={handleDelete}
           icon={{ name: 'delete', color: 'white' }}
           buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
         />

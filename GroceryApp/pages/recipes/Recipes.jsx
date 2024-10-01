@@ -12,12 +12,12 @@ export function Recipes() {
         setRecipes(response.data);
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         loadRecipes();
-        navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('New Recipe')}/> });
-     }, [])
+        navigation.setOptions({ headerRight: () => <Button title="New Recipe" onPress={() => navigation.navigate('New Recipe')} /> });
+    }, [])
 
-    
+
 
 
 
@@ -27,7 +27,7 @@ export function Recipes() {
             {recipes.map(recipe => {
                 return (
                     <View key={recipe._id}>
-                        <RecipeItemInList recipe={recipe} />
+                        <RecipeItemInList recipe={recipe} onRecipeListUpdated={loadRecipes} />
                         {/* <AddToMenuForm recipeID={recipe._id} /> */}
                     </View>
                 )

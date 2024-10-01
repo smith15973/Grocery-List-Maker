@@ -56,6 +56,13 @@ app.post('/recipes/:id', async (req, res) => {
     const recipe = await Recipe.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
     return res.json(recipe)
 })
+
+app.delete('/recipes/:id', async (req, res) => {
+    const { id } = req.params
+    const recipe = await Recipe.findByIdAndDelete(id)
+    res.json(recipe)
+});
+
 app.delete('/recipes/:recipeId/:ingredientId', async (req, res) => {
     const { recipeId, ingredientId } = req.params
     const recipe = await Recipe.findByIdAndUpdate(recipeId, { $pull: { ingredients: { _id: ingredientId } } }, { new: true }).populate('ingredients.item')
@@ -95,6 +102,12 @@ app.post('/lists/:id', async (req, res) => {
     const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
     return res.json(list)
 })
+
+app.delete('/lists/:id', async (req, res) => {
+    const { id } = req.params
+    const list = await List.findByIdAndDelete(id)
+    res.json(list)
+});
 
 app.put('/lists/:id/toggleCheck', async (req, res) => {
     const { id } = req.params
