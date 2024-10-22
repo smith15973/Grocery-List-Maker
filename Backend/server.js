@@ -87,10 +87,18 @@ app.get('/lists/:id', async (req, res) => {
     const list = await List.findById(req.params.id).populate('ingredients.item');
     return res.json(list)
 })
+
+
+
+
 app.post('/lists/:id', async (req, res) => {
     const { item, quantity, unit } = req.body
     if (!item || item === '') {
         return res.status(400).json({ error: 'Item is required' });
+    } else if (!quantity || quantity === '') {
+        return res.status(400).json({ error: 'Quantity is required' });
+    } else if (!unit || unit === '') {
+        return res.status(400).json({ error: 'Unit is required' });
     }
 
     if (!mongoose.isValidObjectId(item)) {
@@ -99,7 +107,20 @@ app.post('/lists/:id', async (req, res) => {
         await ingredient.save();
         req.body.item = ingredient._id;
     }
-    const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
+    // const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
+
+    const list = await List.findById(req.params.id).populate('ingredients.item')
+    const ingredients = list.ingredients;
+    // console.log(ingredients)
+    const existingIngredient = ingredients.find(ingredient => ingredient.item._id.toString() === req.body.item);
+
+    // console.log(req.body.item, existingIngredient)
+    if (existingIngredient !== undefined) {
+        console.log('existing ingredient', existingIngredient)
+    } else {
+        console.log('new ingredient')
+    }
+
     return res.json(list)
 })
 
@@ -139,14 +160,6 @@ app.get('/menus', async (req, res) => {
         })
         .sort({ date: 1 });
 
-        
-
-    
-    // menus.map(menu => {
-    //     menu.meals.map(meal => {
-    //         console.log(meal)
-    //     })
-    // })
     return res.json(menus)
 })
 app.post('/menus', async (req, res) => {
@@ -213,7 +226,6 @@ app.put('/menus/addToList', async (req, res) => {
     await list.save()
     return res.json(list)
 })
-
 
 
 

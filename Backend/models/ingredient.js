@@ -6,6 +6,12 @@ const Ingredient = new Schema({
         type: String,
         required: true,
     },
+    unitType: {
+        type: String,
+        enum: ['Volume', 'Weight', 'Count'],
+        default: 'Count',
+        required: true,
+    },
     group: {
         type: String,
         default: 'Other',

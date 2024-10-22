@@ -10,6 +10,8 @@ import { ShowList } from './pages/lists/ShowList';
 import { ShowRecipe } from './pages/recipes/ShowRecipe';
 import { NewRecipe } from './pages/recipes/NewRecipe';
 import { Icon } from '@rneui/themed';
+import { IngredientsIndex } from './pages/ingredients/IngredientsIndex';
+import { IngredientDetails } from './pages/ingredients/IngredientDetails';
 
 
 const Tab = createBottomTabNavigator();
@@ -46,6 +48,15 @@ function RecipesStack() {
   )
 }
 
+function IngredientsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Ingredients" component={IngredientsIndex} />
+      <Stack.Screen name="IngredientDetails" component={IngredientDetails} />
+    </Stack.Navigator>
+  )
+}
+
 
 function TabBar() {
   return (
@@ -56,7 +67,7 @@ function TabBar() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="list" type="font-awesome" color={color} size={size} />
+            <Icon name="calendar" type="font-awesome-5" color={color} size={size} />
           ),
           title: 'Menu',
         }}
@@ -81,6 +92,17 @@ function TabBar() {
             <Icon name="book" type="font-awesome" color={color} size={size} />
           ),
           title: 'Recipes',
+        }}
+      />
+      <Tab.Screen
+        name="IngredientsTab"
+        component={IngredientsStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="carrot" type="font-awesome-5" color={color} size={size} />
+          ),
+          title: 'Items',
         }}
       />
     </Tab.Navigator>

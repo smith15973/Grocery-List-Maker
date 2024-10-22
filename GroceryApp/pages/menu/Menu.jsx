@@ -53,13 +53,9 @@ export function Menu() {
 
 
             menuData.forEach(menuDay => {
-                // console.log(new Date(menuDay.date).toDateString());
             })
             const mergedData = allDays.map(day => {
-                // console.log(day.toDateString());
-                
                 const menuDay = menuData.find(menuDay => new Date(menuDay.date).setHours(0,0,0,0) === day.setHours(0,0,0,0));
-                console.log(menuDay || { date: day, meals: [] });
                 return menuDay || { date: day, meals: [] };
             })
 
