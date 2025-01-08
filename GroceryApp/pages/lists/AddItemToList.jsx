@@ -2,7 +2,9 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { IngredientUnitSelect } from './IngredientUnitSelect'
-import { IngredientSelect } from './IngredientSelect'
+import { 
+    
+    IngredientSelect } from './IngredientSelect'
 import { IngredientQuantityInput } from './IngredientQuantityInput'
 import { ListItem } from '@rneui/themed'
 import Icon from 'react-native-vector-icons/FontAwesome';

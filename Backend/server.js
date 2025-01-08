@@ -116,9 +116,15 @@ app.post('/lists/:id', async (req, res) => {
 
     // console.log(req.body.item, existingIngredient)
     if (existingIngredient !== undefined) {
-        console.log('existing ingredient', existingIngredient)
+        // item already exists in list; add the quantities
+        await List.findOneAndUpdate(
+            { _id: req.params.id, 'ingredients.item': req.body.item },
+            { $inc: { 'ingredients.$.quantity': req.body.quantity } },
+            { new: true }
+        ).populate('ingredients.item');
     } else {
-        console.log('new ingredient')
+        // new item being added to list
+        await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
     }
 
     return res.json(list)
@@ -151,7 +157,7 @@ app.delete('/lists/:listId/:ingredientId', async (req, res) => {
 app.get('/menus', async (req, res) => {
     let { startDate, endDate } = req.query;
     startDate = new Date(startDate);
-    const menus = await Menu.find( { date: { $gte: startDate, $lte: endDate } })
+    const menus = await Menu.find({ date: { $gte: startDate, $lte: endDate } })
         .populate({
             path: 'meals',
             populate: {
@@ -177,12 +183,12 @@ app.post('/menus', async (req, res) => {
     console.log(date)
 
     let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: meal._id } }, { new: true }).populate("meals.main");
-    
+
     if (!menuDay) {
         menuDay = new Menu({ date, meals: [meal._id] })
         await menuDay.save()
     }
-    
+
     return res.json(menuDay)
 
 })
