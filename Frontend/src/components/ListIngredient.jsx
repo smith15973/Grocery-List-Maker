@@ -35,7 +35,7 @@ export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
             }
             disablePadding
         >
-            <ListItemButton role={undefined} onClick={handleToggle(ingredient._id)} dense>
+            <ListItemButton role={undefined} dense>
                 {ingredient.complete !== undefined ? <ListItemIcon>
                     <Checkbox
                         edge="start"
@@ -43,6 +43,7 @@ export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}
+                        onClick={handleToggle(ingredient._id)}
                     />
                 </ListItemIcon> : ''}
                 <ListItemText id={labelId} primary={`${ingredient.item.name} ${ingredient.quantity ? `--- ${ingredient.quantity} ${ingredient.unit}` : ''}`} />

@@ -22,9 +22,10 @@ export function ShowList() {
         }
     }
 
-    const ingredientList = list.ingredients.sort((a, b) => {
-        return a.complete === b.complete ? 0 : a.complete ? 1 : -1;
-    }).map((ingredient) => ingredient);
+    const ingredientList = list.ingredients;
+    // const ingredientList = list.ingredients.sort((a, b) => {
+    //     return a.complete === b.complete ? 0 : a.complete ? 1 : -1;
+    // }).map((ingredient) => ingredient);
 
     return (
         <div style={{paddingBottom: '5%'}}>

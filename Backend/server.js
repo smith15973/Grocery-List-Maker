@@ -107,27 +107,21 @@ app.post('/lists/:id', async (req, res) => {
         await ingredient.save();
         req.body.item = ingredient._id;
     }
-    // const list = await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
 
-    const list = await List.findById(req.params.id).populate('ingredients.item')
-    const ingredients = list.ingredients;
-    // console.log(ingredients)
-    const existingIngredient = ingredients.find(ingredient => ingredient.item._id.toString() === req.body.item);
+    // item already exists in list; add the quantities
+    const updatedItem = await List.findOneAndUpdate(
+        { _id: req.params.id, 'ingredients.item': req.body.item },
+        { $inc: { 'ingredients.$.quantity': req.body.quantity } },
+        { new: true }
+    ).populate('ingredients.item')
 
-    // console.log(req.body.item, existingIngredient)
-    if (existingIngredient !== undefined) {
-        // item already exists in list; add the quantities
-        await List.findOneAndUpdate(
-            { _id: req.params.id, 'ingredients.item': req.body.item },
-            { $inc: { 'ingredients.$.quantity': req.body.quantity } },
-            { new: true }
-        ).populate('ingredients.item');
-    } else {
-        // new item being added to list
+
+    //if item not in list add to list
+    if (!updatedItem) {
         await List.findByIdAndUpdate(req.params.id, { $push: { ingredients: req.body } }, { new: true }).populate('ingredients.item')
     }
 
-    return res.json(list)
+    return res.status(200).json({ message: 'Item added successfully' })
 })
 
 app.delete('/lists/:id', async (req, res) => {
