@@ -22,6 +22,9 @@
     text-align: center;
     padding: 10px;
 }
+.landing-item:hover {
+    cursor: pointer;
+}
 
 .landing-item h3 {
     margin-top: 10px;

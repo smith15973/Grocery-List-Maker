@@ -2,21 +2,25 @@ import './Landing.css';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useNavigate } from 'react-router-dom';
 
 export function Landing() {
+
+    const navigate = useNavigate();
+
     return (
         <div>
             <h1>Landing</h1>
             <div className="landing-container">
-                <div className="landing-item">
+                <div className="landing-item" onClick={() => { navigate('Lists') }}>
                     <ReceiptLongIcon />
                     <h3>Lists</h3>
                 </div>
-                <div className="landing-item">
+                <div className="landing-item" onClick={() => { navigate('/Recipes') }} >
                     <MenuBookIcon />
                     <h3>Recipes</h3>
                 </div>
-                <div className="landing-item">
+                <div className="landing-item" onClick={() => { navigate('/Menus') }}>
                     <CalendarMonthIcon />
                     <h3>Menus</h3>
                 </div>
