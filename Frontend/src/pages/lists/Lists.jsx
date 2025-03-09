@@ -3,8 +3,9 @@ import axios from "axios";
 import { Button, List, ListItem, ListItemText, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ListItemButton from '@mui/material/ListItemButton';
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 
-import TrashIcon from '@mui/icons-material/Delete';
+
 
 export function Lists() {
 
@@ -34,9 +35,11 @@ export function Lists() {
                     return (
                         <ListItem key={list._id}
                             secondaryAction={
-                                <IconButton edge="end" aria-label="delete" onClick={() => { handleDelete(list._id) }}>
-                                    <TrashIcon />
-                                </IconButton>
+                                <ConfirmDeleteModal
+                                    onConfirm={() => { handleDelete(list._id) }}
+                                    title="Delete List"
+                                    message="Are you sure you want to delete this list?"
+                                />
                             }
                             disablePadding
                         >
