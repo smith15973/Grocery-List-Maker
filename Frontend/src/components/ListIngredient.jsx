@@ -7,6 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import TrashIcon from '@mui/icons-material/Delete';
 import axios from 'axios'
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
     const labelId = `checkbox-list-label-${ingredient._id}`;
@@ -29,9 +30,11 @@ export function ListIngredient({ ingredient, listId, onListUpdated, baseURL }) {
         <ListItem
             key={ingredient._id}
             secondaryAction={
-                <IconButton edge="end" aria-label="delete" onClick={() => { handleDelete(ingredient._id) }}>
-                    <TrashIcon />
-                </IconButton>
+                <ConfirmDeleteModal 
+                    onConfirm={() => { handleDelete(ingredient._id) }}
+                    title={`Delete ${ingredient.item.name}`}
+                    message={`Are you sure you want to delete ${ingredient.item.name} from the list?`}
+                />
             }
             disablePadding
         >

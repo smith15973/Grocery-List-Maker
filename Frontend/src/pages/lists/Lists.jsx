@@ -37,7 +37,7 @@ export function Lists() {
                             secondaryAction={
                                 <ConfirmDeleteModal
                                     onConfirm={() => { handleDelete(list._id) }}
-                                    title="Delete List"
+                                    title={`Delete ${list.name}`}
                                     message="Are you sure you want to delete this list?"
                                 />
                             }
