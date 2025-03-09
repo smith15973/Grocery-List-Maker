@@ -18,6 +18,11 @@ export function Lists() {
         setLists(response.data);
     }
 
+    const handleDelete = async (listId) => {
+        const response = await axios.delete(`http://localhost:3000/lists/${listId}`)
+        loadLists()
+    }
+
     useEffect(() => { loadLists() }, [])
 
     return (
