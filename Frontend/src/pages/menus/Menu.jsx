@@ -80,7 +80,7 @@ export function Menu() {
 
     return (
         <>
-            <div style={{width: '40%', margin: '0 auto'}}>
+            {/* <div style={{width: '40%', margin: '0 auto'}}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px'}}>
                     {Array.from({ length: daysOfWeek.length }, (_, i) => (
                         <div style={{ border: '1px solid black', paddingTop: '100%', position: 'relative' }} key={i + 1}>
@@ -97,7 +97,9 @@ export function Menu() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
+
+            
             {/* <Paper square sx={{ pb: '50px' }}>
                 <div style={{ display: "inline-flex", justifyContent: "between", alignItems: "end" }}>
                     <AddMealsToList disabled={selectMode && mealsSelected.length} mealids={mealsSelected} onSubmit={clearSelected} />

@@ -8,6 +8,7 @@ import { Lists } from './pages/lists/Lists'
 import { Menu } from './pages/menus/Menu'
 import { Layout } from './components/Layout'
 import { ShowList } from './pages/lists/ShowList'
+import WeeklyMenuCalendar from './pages/menus/WeeklyMenuCalendar'
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
           <Route path="/lists" element={<Lists />} />
           <Route path="/lists/:id" element={<ShowList />} />
 
-          <Route path="/menus" element={<Menu />} />
+          <Route path="/menus" element={<WeeklyMenuCalendar />} />
         </Route>
       </Routes>
     </Router>
