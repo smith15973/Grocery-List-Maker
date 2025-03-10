@@ -12,18 +12,19 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 // Define colors for each meal type
 const mealTypeColors = {
-    Breakfast: '#FFF9C4', // Light Yellow
-    Lunch: '#C8E6C9',     // Light Green
-    Dinner: '#BBDEFB',    // Light Blue
-    Snack: '#F8BBD0',     // Light Pink
-    Dessert: '#D1C4E9',   // Light Purple
-    empty: '#E0E0E0'      // Grey for no meals
+    Breakfast: '#FFF9C4',
+    Lunch: '#C8E6C9',
+    Dinner: '#BBDEFB',
+    Snack: '#F8BBD0',
+    Dessert: '#D1C4E9',
+    empty: '#E0E0E0'
 };
 
 // Styles
 const calendarContainerStyle = {
     p: 2,
     maxWidth: 1200,
+    minWidth: 300,
     margin: "0 auto",
 };
 
@@ -40,9 +41,11 @@ const dayHeaderStyle = {
     textAlign: "center",
     borderBottom: "1px solid",
     borderColor: "grey.300",
+    minWidth: 0,  // Prevent overflow
+    overflow: "hidden",
+    textOverflow: "ellipsis",
 };
 
-// New style for current day header
 const currentDayHeaderStyle = {
     ...dayHeaderStyle,
     bgcolor: "primary.main",
@@ -50,16 +53,30 @@ const currentDayHeaderStyle = {
 };
 
 const dayCellStyle = {
-    p: 2,
+    p: 1,
     borderRight: "1px solid",
     borderBottom: "1px solid",
     borderColor: "grey.300",
     minHeight: 200,
+    display: "flex",
+    flexDirection: "column",
+    minWidth: 0,  // Prevent overflow
 };
 
 const currentDayStyle = {
     ...dayCellStyle,
     bgcolor: "primary.light",
+};
+
+const mealBoxStyle = {
+    mb: 1,
+    p: 1,
+    borderRadius: 1,
+    border: '1px solid',
+    borderColor: 'grey.300',
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
 };
 
 const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snack", "Dessert"];
@@ -152,14 +169,21 @@ export default function WeeklyMenuCalendar() {
             </Box>
 
             <Box>
-                <Grid container>
+                <Grid container spacing={0}>
                     {daysOfWeek.map((date, index) => (
-                        <Grid item xs key={`header-${index}`}>
+                        <Grid item xs={12/7} key={`header-${index}`}>
                             <Box sx={isToday(date) ? currentDayHeaderStyle : dayHeaderStyle}>
-                                <Typography variant="subtitle1">
+                                <Typography 
+                                    variant="subtitle1"
+                                    noWrap
+                                >
                                     {date.toLocaleDateString("en-US", { weekday: "long" })}
                                 </Typography>
-                                <Typography variant="body2" color={isToday(date) ? "white" : "text.secondary"}>
+                                <Typography 
+                                    variant="body2" 
+                                    color={isToday(date) ? "white" : "text.secondary"}
+                                    noWrap
+                                >
                                     {date.toLocaleDateString("en-US", {
                                         month: "short",
                                         day: "numeric",
@@ -170,11 +194,11 @@ export default function WeeklyMenuCalendar() {
                     ))}
                 </Grid>
 
-                <Grid container>
+                <Grid container spacing={0}>
                     {daysOfWeek.map((date, index) => (
                         <Grid
                             item
-                            xs
+                            xs={12/7}
                             key={`cell-${index}`}
                             sx={isToday(date) ? currentDayStyle : dayCellStyle}
                         >
@@ -188,22 +212,25 @@ export default function WeeklyMenuCalendar() {
                                     <Box
                                         key={mealType}
                                         sx={{
-                                            mb: 1,
-                                            p: 1,
+                                            ...mealBoxStyle,
                                             bgcolor: hasMeals ? mealTypeColors[mealType] : mealTypeColors.empty,
-                                            borderRadius: 1,
-                                            border: '1px solid',
-                                            borderColor: 'grey.300'
                                         }}
                                     >
                                         <Typography 
                                             variant="subtitle2" 
                                             color="text.secondary"
                                             sx={{ mb: 0.5 }}
+                                            noWrap
                                         >
                                             {mealType}
                                         </Typography>
-                                        <Typography variant="body2">
+                                        <Typography 
+                                            variant="body2"
+                                            sx={{ 
+                                                wordWrap: "break-word",
+                                                overflow: "hidden",
+                                            }}
+                                        >
                                             {hasMeals ? (
                                                 meals.map((meal) => (
                                                     <div key={meal._id}>{meal.main.name}</div>
