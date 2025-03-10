@@ -1,32 +1,133 @@
-/* Container for the grid of squares */
-.landing-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust minmax to fit your design */
-    gap: 10px; /* Minimal gap between the squares */
-    width: 100%;
-    padding: 10px; /* Optional: Padding around the container */
-    box-sizing: border-box;
-}
-
-/* Each square item */
-.landing-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+.landing-page {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/food-background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    aspect-ratio: 1 / 1; /* Ensures the div stays square */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+    justify-content: center;
     text-align: center;
-    padding: 10px;
-}
-.landing-item:hover {
+    color: white;
+    padding: 0 20px;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+  }
+  
+  .app-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  
+  .app-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .cta-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 30px;
     cursor: pointer;
-}
-
-.landing-item h3 {
-    margin-top: 10px;
-    font-size: 1em;
-}
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-button:hover {
+    background-color: #ff5252;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Features Section */
+  .features-section {
+    padding: 5rem 2rem;
+    background-color: #f9f9f9;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: #444;
+  }
+  
+  .feature-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .feature-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-icon {
+    margin-bottom: 1.5rem;
+    color: #ff6b6b;
+  }
+  
+  .card-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #444;
+  }
+  
+  .card-description {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  /* Footer */
+  .landing-footer {
+    background-color: #333;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .app-title {
+      font-size: 2.5rem;
+    }
+    
+    .feature-card {
+      width: 100%;
+      max-width: 350px;
+    }
+    
+    .hero-section {
+      height: 50vh;
+    }
+  }
