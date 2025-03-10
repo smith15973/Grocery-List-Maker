@@ -150,8 +150,23 @@ app.delete('/lists/:listId/:ingredientId', async (req, res) => {
 
 app.get('/menus', async (req, res) => {
     let { startDate, endDate } = req.query;
-    startDate = new Date(startDate);
-    const menus = await Menu.find({ date: { $gte: startDate, $lte: endDate } })
+
+    // Convert to Date objects and set to full day range in UTC
+    const start = new Date(startDate);
+    start.setUTCHours(0, 0, 0, 0);  // Set to beginning of day in UTC
+    
+    const end = new Date(endDate);
+    end.setUTCHours(23, 59, 59, 999);  // Set to end of day in UTC
+
+
+    const query = { 
+        date: { 
+            $gte: start, 
+            $lte: end 
+        } 
+    };
+
+    const menus = await Menu.find(query)
         .populate({
             path: 'meals',
             populate: {
@@ -159,22 +174,16 @@ app.get('/menus', async (req, res) => {
             },
         })
         .sort({ date: 1 });
+    return res.json(menus);
+});
 
-    return res.json(menus)
-})
+
 app.post('/menus', async (req, res) => {
     console.log(req.body)
     let { date, main, type, sides } = req.body;
     const meal = new Meal({ main, type, sides });
     meal.save();
 
-    const roundDate = (date) => {
-        date.setHours(0, 0, 0, 0);
-        return date;
-    }
-
-    date = roundDate(new Date(date));
-    console.log(date)
 
     let menuDay = await Menu.findOneAndUpdate({ date }, { $push: { meals: meal._id } }, { new: true }).populate("meals.main");
 
@@ -182,6 +191,8 @@ app.post('/menus', async (req, res) => {
         menuDay = new Menu({ date, meals: [meal._id] })
         await menuDay.save()
     }
+
+    console.log(menuDay)
 
     return res.json(menuDay)
 
