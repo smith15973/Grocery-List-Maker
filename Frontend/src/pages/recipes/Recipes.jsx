@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { AddToMenuForm } from "./AddToMenuForm";
-import { List } from "@mui/material";
+import { Button, Container, List, Typography } from "@mui/material";
 import { ListItem } from "@mui/material";
 import { ListItemButton } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { NewRecipe } from "./NewRecipe";
 
 
 
@@ -25,9 +26,9 @@ export function Recipes() {
 
 
     return (
-        <>
-            <a href="#/recipes/new">New Recipe</a>
-            <h3>Recipes</h3>
+        <Container>
+            <Button variant="outlined" onClick={() => navigate("/recipes/new")}>New Recipe</Button>
+            <Typography variant='h4' align='center'>Recipes</Typography>
             <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
                 {recipes.map(recipe => {
                     return (
@@ -44,7 +45,7 @@ export function Recipes() {
                     )
                 })}
             </List>
-        </>
+        </Container>
     )
 }
 

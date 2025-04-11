@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { Button, List, ListItem, ListItemText} from "@mui/material";
+import { Button, Container, List, ListItem, ListItemText, Typography} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ListItemButton from '@mui/material/ListItemButton';
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
@@ -27,8 +27,8 @@ export function Lists() {
     useEffect(() => { loadLists() }, [])
 
     return (
-        <>
-            <h3>Lists</h3>
+        <Container>
+            <Typography variant='h4' align='center'>Lists</Typography>
             <Button variant="outlined">Create New List</Button>
             <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
                 {lists.map(list => {
@@ -50,6 +50,6 @@ export function Lists() {
                     )
                 })}
             </List>
-        </>
+        </Container>
     )
 }

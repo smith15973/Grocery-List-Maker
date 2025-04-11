@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { NewIngredient } from '../../components/NewIngredient';
 import { AddIngredient } from './AddIngredient';
+import { Button, Container, Typography } from '@mui/material';
 
 
 
@@ -64,10 +65,11 @@ export function NewRecipe() {
   }
 
   return (
-    <>
-      <a href="#/recipes">Back to Recipes</a>
+    <Container>
+
+      <Button variant='outlined' onClick={() => navigate('/recipes')}>Back to Recipes</Button>
       <NewIngredient onIngredientAdded={loadIngredients} />
-      <h2>New Recipe</h2>
+      <Typography variant='h4' align='center'>New Recipe</Typography>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -85,9 +87,9 @@ export function NewRecipe() {
           onChange={handleChange}
         />
         <select
-        onChange={handleChange}
-        value={recipeForm.type}
-        name="type">
+          onChange={handleChange}
+          value={recipeForm.type}
+          name="type">
           <option value="">Select...</option>
           <option value="Main">Main</option>
           <option value="Side">Side</option>
@@ -105,6 +107,6 @@ export function NewRecipe() {
         <br />
         <button type="submit">Add Recipe</button>
       </form>
-    </>
+    </Container>
   );
 }

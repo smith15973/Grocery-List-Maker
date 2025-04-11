@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 import { ListOfItems } from './ListOfItems';
+import { Typography } from '@mui/material';
 
 export function ShowList() {
     const routeParams = useParams()
@@ -29,7 +30,7 @@ export function ShowList() {
 
     return (
         <div style={{paddingBottom: '5%'}}>
-            <h1>{list.name}</h1>
+            <Typography variant='h4' align='center'>{list.name}</Typography>
             <ListOfItems list={ingredientList} listId={list._id} loadList={loadList} baseURL="http://localhost:3000/lists" />
         </div>
 
