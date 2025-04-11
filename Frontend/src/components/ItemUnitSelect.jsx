@@ -1,21 +1,20 @@
-import { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function IngredientUnitSelect({ onAddIngredientFormUpdated, addIngredientForm }) {
+export default function ItemUnitSelect({ onFormUpdated, form }) {
 
     return (
         <>
             <FormControl sx={{ minWidth: '30%' }}>
-                <InputLabel id="ingredient-unit-select-label">Units</InputLabel>
+                <InputLabel id="item-unit-select-label">Units</InputLabel>
                 <Select
-                    labelId="ingredient-unit-select"
-                    id="ingredient-unit-select"
-                    value={addIngredientForm.unit}
+                    labelId="item-unit-select"
+                    id="item-unit-select"
+                    value={form.unit}
                     label="Age"
-                    onChange={(e) => onAddIngredientFormUpdated('unit', e.target.value)}
+                    onChange={(e) => onFormUpdated('unit', e.target.value)}
                 >
                     <MenuItem value={'lbs'}>lbs</MenuItem>
                     <MenuItem value={'cups'}>cups</MenuItem>

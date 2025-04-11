@@ -3,18 +3,18 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function IngredientSelect({ onAddIngredientFormUpdated, addIngredientForm }) {
+export default function ItemSelect({ onFormUpdated, form }) {
 
-    const [ingredients, setIngredients] = useState([])
+    const [items, setItems] = useState([])
 
     useEffect(() => {
-        loadIngredients()
+        loadItems()
     }, [])
 
-    async function loadIngredients() {
+    async function loadItems() {
         try {
             const response = await axios.get(`http://localhost:3000/ingredients`)
-            setIngredients(response.data)
+            setItems(response.data)
         } catch (e) {
             console.log(e)
         }
@@ -26,13 +26,13 @@ export default function IngredientSelect({ onAddIngredientFormUpdated, addIngred
         <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={ingredients.map((ingredient) => ({ label: ingredient.name, ingredientId: ingredient._id }))}
+            options={items.map((item) => ({ label: item.name, ingredientId: item._id }))}
             getOptionLabel={(option) => option.label || ''}  // Converts option object to string
             sx={{ minWidth: '40%' }}
             renderInput={(params) => <TextField {...params} label="Item" />}
             isOptionEqualToValue={(option, value) => option.ingredientId === value.ingredientId}
-            onChange={(e, value) => onAddIngredientFormUpdated('item', value)}
-            value={addIngredientForm.item !== '' ? addIngredientForm.item : null}
+            onChange={(e, value) => onFormUpdated('item', value)}
+            value={form.item !== '' ? form.item : null}
         />
     );
 }
