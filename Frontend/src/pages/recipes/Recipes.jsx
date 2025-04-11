@@ -7,6 +7,7 @@ import { ListItemButton } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { NewRecipe } from "./NewRecipe";
+import { CustomModal } from "../../components/CustomModal";
 
 
 
@@ -28,6 +29,7 @@ export function Recipes() {
     return (
         <Container>
             <Button variant="outlined" onClick={() => navigate("/recipes/new")}>New Recipe</Button>
+            <CustomModal />
             <Typography variant='h4' align='center'>Recipes</Typography>
             <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
                 {recipes.map(recipe => {
